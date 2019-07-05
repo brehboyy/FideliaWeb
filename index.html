@@ -1,232 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>Fidelia</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style type="text/css">
-    * {
-      margin: 0px;
-      padding: 0px;
-    }
-
-    body {
-      overflow: hidden;
-      background-color: #CCCCCC;
-      color: #000000;
-    }
-
-    #bee-plugin-container {
-      position: absolute;
-      top: 5px;
-      bottom: 30px;
-      left: 5px;
-      right: 5px;
-    }
-
-    #integrator-bottom-bar {
-      position: absolute;
-      height: 25px;
-      bottom: 0px;
-      left: 5px;
-      right: 0px;
-    }
-  </style>
+	<title>Login V18</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
 </head>
+<body style="background-color: #666666;">
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form">
+					<span class="login100-form-title p-b-43">
+						Login to continue
+					</span>
+					
+					
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="email">
+						<span class="focus-input100"></span>
+						<span class="label-input100">Email</span>
+					</div>
+					
+					
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
+						<input class="input100" type="password" name="pass">
+						<span class="focus-input100"></span>
+						<span class="label-input100">Password</span>
+					</div>
 
-<body>
+					<div class="flex-sb-m w-full p-t-3 p-b-32">
+						<div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								Remember me
+							</label>
+						</div>
 
-  <div id="bee-plugin-container"></div>
-  <div id="integrator-bottom-bar">
-    <!-- You can change the download function to get the JSON and use this input to load it -->
-    Select template to load:
-    <input id="choose-template" type="file" />
-    <!-- You need to provide a send function to use this input field -->
-    Send test e-mail to:
-    <input id="integrator-test-emails" type="text" />
-  </div>
+						<div>
+							<a href="#" class="txt1">
+								Forgot Password?
+							</a>
+						</div>
+					</div>
+			
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+					
+					<div class="text-center p-t-46 p-b-20">
+						<span class="txt2">
+							or sign up using
+						</span>
+					</div>
+
+					<div class="login100-form-social flex-c-m">
+						<a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+							<i class="fa fa-facebook-f" aria-hidden="true"></i>
+						</a>
+
+						<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+
+				<div class="login100-more" style="background-image: url('images/bg-01.jpg');">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+	
+<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
 
 </body>
-
-<script src="Blob.js"></script>
-<script src="fileSaver.js"></script>
-<script src="https://app-rsrc.getbee.io/plugin/BeePlugin.js"></script>
-
-<script type="text/javascript">
-
-  var request = function (method, url, data, type, callback) {
-    var req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-      if (req.readyState === 4 && req.status === 200) {
-        var response = JSON.parse(req.responseText);
-        callback(response);
-      } else if (req.readyState === 4 && req.status !== 200) {
-        console.error('Access denied, invalid credentials. Please check you entered a valid client_id and client_secret.');
-      }
-    };
-
-    req.open(method, url, true);
-    if (data && type) {
-      if (type === 'multipart/form-data') {
-        var formData = new FormData();
-        for (var key in data) {
-          formData.append(key, data[key]);
-        }
-        data = formData;
-      }
-      else {
-        req.setRequestHeader('Content-type', type);
-      }
-    }
-
-    req.send(data);
-  };
-
-  var save = function (filename, content) {
-    saveAs(
-      new Blob([content], { type: 'text/plain;charset=utf-8' }),
-      filename
-    );
-  };
-
-  var specialLinks = [{
-    type: 'unsubscribe',
-    label: 'SpecialLink.Unsubscribe',
-    link: 'http://[unsubscribe]/'
-  }, {
-    type: 'subscribe',
-    label: 'SpecialLink.Subscribe',
-    link: 'http://[subscribe]/'
-  }];
-
-  var mergeTags = [{
-    name: 'tag 1',
-    value: '[tag1]'
-  }, {
-    name: 'tag 2',
-    value: '[tag2]'
-  }];
-
-  var mergeContents = [{
-    name: 'content 1',
-    value: '[content1]'
-  }, {
-    name: 'content 2',
-    value: '[content1]'
-  }];
-
-  function userInput(message, sample) {
-    return function handler(resolve, reject) {
-      var data = prompt(message, JSON.stringify(sample))
-      return (data == null || data == '')
-        ? reject()
-        : resolve(JSON.parse(data))
-    }
-  }
-
-  var beeConfig = {
-    uid: 'test1-clientside',
-    container: 'bee-plugin-container',
-    autosave: 15,
-    language: 'en-US',
-    trackChanges: true,
-    specialLinks: specialLinks,
-    mergeTags: mergeTags,
-    mergeContents: mergeContents,
-    contentDialog: {
-      specialLinks: {
-        label: 'Add a custom Special Link',
-        handler: userInput('Enter the deep link:', {
-          type: 'custom',
-          label: 'external special link',
-          link: 'http://www.example.com'
-        })
-      },
-      mergeTags: {
-        label: 'Add custom tag 2',
-        handler: userInput('Enter the merge tag:', {
-          name: 'name',
-          value: '[name]'
-        })
-      },
-      mergeContents: {
-        label: 'Choose a custom merge content',
-        handler: userInput('Enter the merge content:', {
-          name: 'my custom content',
-          value: '{my-custom-content}'
-        })
-      },
-      rowDisplayConditions: {
-        label: 'Open builder',
-        handler: userInput('Enter the row display condition:', {
-          type: 'People',
-          label: 'Person is a developer',
-          description: 'Check if a person is a developer',
-          before: "{if job == 'developer'}",
-          after: '{endif}'
-        })
-      },
-    },
-    onChange: function (jsonFile, response) {
-      console.log('json', jsonFile);
-      console.log('response', response);
-    },
-    onSave: function (jsonFile, htmlFile) {
-      console.log(jsonFile, htmlFile);
-      save('newsletter.html', htmlFile);
-    },
-    onSaveAsTemplate: function (jsonFile) { // + thumbnail? 
-      save('newsletter-template.json', jsonFile);
-    },
-    onAutoSave: function (jsonFile) { // + thumbnail? 
-      console.log(new Date().toISOString() + ' autosaving...');
-      window.localStorage.setItem('newsletter.autosave', jsonFile);
-    },
-    onSend: function (htmlFile) {
-      //write your send test function here
-    },
-    onError: function (errorMessage) {
-      console.log('onError ', errorMessage);
-    }
-  };
-
-  var bee = null;
-
-  var loadTemplate = function (e) {
-    var templateFile = e.target.files[0];
-    var reader = new FileReader();
-
-    reader.onload = function () {
-      var templateString = reader.result;
-      var template = JSON.parse(templateString);
-      bee.load(template);
-    };
-
-    reader.readAsText(templateFile);
-  };
-
-  document.getElementById('choose-template').addEventListener('change', loadTemplate, false);
-
-  request(
-    'POST',
-    'https://auth.getbee.io/apiauth',
-    'grant_type=password&client_id=08be1dd5-13ac-4744-8b55-f3748fdd7406&client_secret=KSNip7ZOqbCzkxOnLaHOmQWWxf6xr8LuDRGFFcfkX0gmzsIAaDi0',
-    'application/x-www-form-urlencoded',
-    function (token) {
-      BeePlugin.create(token, beeConfig, function (beePluginInstance) {
-        bee = beePluginInstance;
-        request(
-          'GET',
-          'https://rsrc.getbee.io/api/templates/m-bee',
-          null,
-          null,
-          function (template) {
-            bee.start(template);
-          });
-      });
-    });
-
-</script>
-
 </html>
