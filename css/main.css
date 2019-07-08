@@ -618,3 +618,16 @@ input.input100 {
   background: #333333;
   color: #fff;
 }
+
+/*====================================================================
+[ Message ] */
+.buttonAllModelLeft{
+  width: 200px;
+  size:10px;
+  margin: 10px;
+  }
+  .buttonAllModelRight{
+  width: 800px;
+  size:10px;
+  margin: 10px;
+  }
