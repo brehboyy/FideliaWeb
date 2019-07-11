@@ -299,7 +299,26 @@
     },
     onSave: function (jsonFile, htmlFile) {
       console.log(jsonFile, htmlFile);
-      save('newsletter.html', htmlFile);
+      /*$.post('http://localhost/apifidelia/tests/public/message.php/sendMessage',{message : htmlFile, listTag : [1,2]}, function(data){
+            console.log(data);
+      });*/
+      let messageObject = { 'Titre': $('#titre').val(), 'Corps': htmlFile, 'Object': $('#object').val(), 'Type': 'Mail', 'Categorie': 'Cat1' };
+
+      $.ajax({
+        url: 'http://localhost:8888/apifidelia/tests/public/message.php/insertMessage',
+        type: 'POST',
+        dataType: 'json',
+        data: { 'message': JSON.stringify(messageObject) },
+        cache: false
+      }).done(function (response) {
+        console.log(response);
+      }).fail(error => {
+        console.log(error.responseText);
+      });
+
+      //save('newsletter.html', htmlFile);
+    }
+      //save('newsletter.html', htmlFile);
     },
     onSaveAsTemplate: function (jsonFile) { // + thumbnail? 
       save('newsletter-template.json', jsonFile);
