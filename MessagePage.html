@@ -26,6 +26,28 @@
       <link rel="stylesheet" type="text/css" href="css/util.css">
       <link rel="stylesheet" type="text/css" href="css/main.css">
       <!--===============================================================================================-->
+
+        <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+      <!-- Bootstrap core CSS -->
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <!-- Material Design Bootstrap -->
+      <link href="css/mdb.min.css" rel="stylesheet">
+      <!-- Your custom styles (optional) -->
+      <link href="css/style.css" rel="stylesheet">
+
+      <style>
+         .buttonAllModelLeft{
+         width: 200px;
+         size:10px;
+         margin: 10px;
+         }
+         .buttonAllModelRight{
+         width: 800px;
+         size:10px;
+         margin: 10px;
+         }
+      </style>
    </head>
    <body style="background-color: white;">
       <!--
@@ -172,31 +194,7 @@
 	            Nouveaux produits
 	            </button>
 	         </div>
-	         <div class="col-sm-9">
-				<button class="btn btn-secondary buttonAllModelRight">
-	            Mail pour la 
-	            </button>
-				   <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la sortie d'un nouveau produit Matilia - 18/11/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la promotion du produit Matilia(2) - 17/12/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la sortie d'un nouveau produit Matilia - 20/01/2019
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            SMS de promotion pour Matilia - 30/01/2019
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la sortie d'un produit Nébilia - 18/11/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la promotion du produit Nébilia(3) - 17/12/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            SMS de promotion pour Nébilia - 05/01/2019
-	            </button>
+	         <div class="col-sm-9" id="listMessage">
 	         </div>
 	      </div>
       </div>
@@ -205,16 +203,38 @@
       <footer>
       </footer>
    </body>
+     <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+
+  <script type="text/javascript" src="js/main.js"></script>
+   <script type="text/javascript">
+      $('#listMessage').ready(function(){
+        $.ajax({
+            url: 'http://localhost:8888/apifidelia/tests/public/message.php/getall',
+            type: 'GET',
+            cache: false
+          }).done(function (response) {
+            let result = JSON.parse(response);
+            console.log(result);
+            let output = "";
+            $.each(result.result, function(key, val){
+                output += '<button class="btn btn-primary buttonAllModelRight">';
+                output += val.Titre_Modele_Message;
+                output += '</button>';
+            });
+            console.log(output);
+        $('#listMessage').html(output);
+
+          }).fail(error => {
+            console.log(error.responseText);
+          });
+    });
+      </script>
 </html>
-<style>
-   .buttonAllModelLeft{
-   width: 200px;
-   size:10px;
-   margin: 10px;
-   }
-   .buttonAllModelRight{
-   width: 800px;
-   size:10px;
-   margin: 10px;
-   }
-</style>

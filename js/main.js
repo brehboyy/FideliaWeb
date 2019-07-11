@@ -65,6 +65,30 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
+
+    function loadMessage(idDiv){
+        $.ajax({
+            url: 'http://localhost:8888/apifidelia/tests/public/message.php/getall',
+            type: 'POST',
+            dataType: 'json',
+            data: { 'message': JSON.stringify(messageObject) },
+            cache: false
+          }).done(function (response) {
+            let result = JSON.parse(response);
+            console.log(result);
+            let output = "";
+            $.each(result.result, function(key, val){
+                output += '<button class="btn btn-primary buttonAllModelRight"></button>';
+                output += val.Titre_Modele_Message;
+                output += '</button>';
+            });
+            console.log(output);
+        $(idDiv).html(output);
+
+          }).fail(error => {
+            console.log(error.responseText);
+          });
+    }
     
 
 })(jQuery);
