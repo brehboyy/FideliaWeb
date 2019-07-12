@@ -26,6 +26,9 @@
       <link rel="stylesheet" type="text/css" href="css/util.css">
       <link rel="stylesheet" type="text/css" href="css/main.css">
       <!--===============================================================================================-->
+            <!-- Font Awesome -->
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
    </head>
    <body style="background-color: white;">
       
@@ -53,18 +56,13 @@
                         SMS
                      </button>
                   </div>
-                  <div class ="col-sm-6">
-                     <button> 
-                        <img src="images/icons/plus.jpg" style="width:50px; height:50px;">
-                     </button>
-                  </div>
                </div>
             </div>
          </div>
       </header>
 
       <div class="container">
-         <div class="row" style="height: 100px;">
+         <div class="row" style="height: 100px; width: auto">
             <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
             <div class="col-sm-3" style="text-align: center;">
                <button class="btn btn-outline-success btn-sm" style="margin: 10px;text-align: center;">
@@ -112,30 +110,66 @@
 	            <button class="btn btn-primary buttonAllModelLeft">
 	            Nouveaux produits
 	            </button>
-	         </div>
-	         <div class="col-sm-9">
-				<button class="btn btn-secondary buttonAllModelRight">
-	            Mail pour la sortie d'un nouveau produit Matilia - 18/11/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la promotion du produit Matilia(2) - 17/12/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la sortie d'un nouveau produit Matilia - 20/01/2019
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            SMS de promotion pour Matilia - 30/01/2019
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la sortie d'un produit Nébilia - 18/11/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            Mail pour la promotion du produit Nébilia(3) - 17/12/2018
-	            </button>
-	            <button class="btn btn-primary buttonAllModelRight">
-	            SMS de promotion pour Nébilia - 05/01/2019
-	            </button>
-	         </div>
+            </div>
+            <div class="col-sm-9" style="text-align: center;">
+               <div class="container">
+                  <div class="card">
+                      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Liste des messages</h3>
+                      <div class="card-body">
+                          <div id="table" class="table-editable">
+                              <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                    class="fas fa-plus" aria-hidden="true"></i></a></span>
+                              <table class="table table-hover table-bordered table-responsive-md table-striped text-center "
+                                id="dt-select">
+                                  <thead>
+                                      <tr>
+                                          <th class="text-center">Titre</th>
+                                          <th class="text-center">Objet</th>
+                                          <th class="text-center">Type</th>
+                                          <th class="text-center">Catégorie</th>
+                                          <th class="text-center">Date</th>
+                                          <th class="text-center">Action</th>
+                                          <th class="text-center">Envoyer</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td class="pt-3-half" contenteditable="false">Promotion sur l'article 1</td>
+                                          <td class="pt-3-half" contenteditable="false">Promotion sur un article</td>
+                                          <td class="pt-3-half" contenteditable="false">Mail</td>
+                                          <td class="pt-3-half" contenteditable="false">Promotion</td>
+                                          <td class="pt-3-half" contenteditable="false">2019-07-07</td>
+                                          <td>
+                                              <span class="table-remove"><button type="button"
+                                  class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span>
+                                          </td>
+                                           <td class="pt-3-half">
+                                              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-paper-plane"
+                                    aria-hidden="true"></i></a></span>
+                                          </td>
+                                      </tr>
+                                      <!-- This is our clonable table line -->
+                                      <tr>
+                                          <td class="pt-3-half" contenteditable="false">Arrivage nouveau produit</td>
+                                          <td class="pt-3-half" contenteditable="false">Nouveau produit</td>
+                                          <td class="pt-3-half" contenteditable="false">SMS</td>
+                                          <td class="pt-3-half" contenteditable="false">Nouveauté</td>
+                                          <td class="pt-3-half" contenteditable="false">2019-07-07</td>
+                                          <td>
+                                              <span class="table-remove"><button type="button"
+                                        class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span>
+                                          </td>
+                                           <td class="pt-3-half">
+                                              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-paper-plane"
+                                    aria-hidden="true"></i></a></span>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
 	      </div>
       </div>
 
