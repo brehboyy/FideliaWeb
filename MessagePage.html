@@ -43,7 +43,7 @@
          margin: 10px;
          }
          .buttonAllModelRight{
-         width: 800px;
+         width: 600px;
          size:10px;
          margin: 10px;
          }
@@ -225,9 +225,11 @@
             console.log(result);
             let output = "";
             $.each(result.result, function(key, val){
-                output += '<button class="btn btn-primary buttonAllModelRight">';
+                output += '<button class="btn btn-primary buttonAllModelRight col-sm-8">';
                 output += val.Titre_Modele_Message;
                 output += '</button>';
+                output += '<span class="table-up"><a href="#!" class=" col-sm-2 indigo-text"><i class="fas fa-edit"></i></a></span>';
+                output += '<span class="table-up"><a href="#!" class=" col-sm-2 indigo-text"><i class="danger-color-dark fas fa-trash"></i></a></span>';
             });
             console.log(output);
         $('#listMessage').html(output);
