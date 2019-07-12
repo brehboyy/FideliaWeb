@@ -25,6 +25,7 @@
       <!--===============================================================================================-->
       <link rel="stylesheet" type="text/css" href="css/util.css">
       <link rel="stylesheet" type="text/css" href="css/main.css">
+      <link rel="stylesheet" type="text/css" href="css/mdb.min.css">
       <!--===============================================================================================-->
 
       <style>
@@ -69,17 +70,15 @@
            .emailCreator{
               height: 80vh;
            }
-         </style>
+      </style>
    </head>
    <body style="background-color: white;">
 
-      <header>
-         <div class="container">
+         <div class="header">
             <div class="row" style="height: 100px;">
-               <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
                <div class="col-sm-3">
                   <center>
-                     <img src="images/logo.jpg" alt="Fidélia" style="width:150px; height:100px;">
+                     <img src="images/logo.jpg" alt="Fidélia" style="width:200px; height:150px;">
                   </center>
                </div>
                <div class="col-sm-6" style="margin-top: 20px;">
@@ -100,7 +99,6 @@
                </div>
             </div>
          </div>
-      </header>
 
       <div class="container">
          <div class="row" style="height: 100px;">
@@ -110,24 +108,19 @@
                   <a href="Accueil.html">Accueil</a>
                </button>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               Clients web
+               <a href="AdministrationBdd.html">Administration des tables</a>
                </button>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               Pharmacies
+               <a href="MessagePage.html">Modèles de messages</a>
                </button>
             </div>
-            <div class="col-sm-2" >
+            <div class="col-sm-3" >
                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               Hôpitaux
-               </button>
-            </div>
-            <div class="col-sm-2">
-               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               Crèches
+               <a href="SendMessage.html">Programmation</a>
                </button>
             </div>
          </div>
@@ -136,23 +129,28 @@
       <div class="container">
 	      <div class="col-sm-12 row">
 	         <div class="col-sm-3">
-	            <button class="btn btn-primary buttonAllModelLeft">
-	            Relance
-	            </button>
-	            <button class="btn btn-primary buttonAllModelLeft">
-	            Promotion
-	            </button>
-	            <button class="btn btn-primary buttonAllModelLeft">
-	            Présentation du salon
-	            </button>
-	            <button class="btn btn-primary buttonAllModelLeft">
-	            Anniversaire
-	            </button>
-	            <button class="btn btn-primary buttonAllModelLeft">
-	            Nouveaux produits
-	            </button>
-	         </div>
-	         <div class="col-sm-9 emailCreator">
+            <select class="browser-default custom-select">
+              <option selected>Liste de clients</option>
+              <option value="1">Clients web</option>
+              <option value="3">Pharmacies</option>
+              <option value="2">Hôpitaux</option>
+              <option value="2">Crèches</option>
+            </select>
+           </div>
+           <div class="col-sm-3">
+            <select class="browser-default custom-select">
+              <option selected>Liste d'évènements</option>
+              <option value="1">Relance</option>
+              <option value="3">Promotion</option>
+              <option value="2">Présentation du salon</option>
+              <option value="2">Anniversaire</option>
+              <option value="2">Nouveaux produits</option>
+            </select>
+           </div>
+
+	      </div>
+      </div>
+           <div class="col-sm-12 emailCreator">
                <div id="bee-plugin-container"></div>
                <div id="integrator-bottom-bar">
                   <!-- You can change the download function to get the JSON and use this input to load it -->
@@ -162,10 +160,7 @@
                   Send test e-mail to:
                   <input id="integrator-test-emails" type="text" />
                </div>
-	         </div>
-	      </div>
-      </div>
-
+           </div>
 
       <footer>
       </footer>
