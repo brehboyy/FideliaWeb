@@ -62,29 +62,50 @@
       </header>
 
       <div class="container">
-         <div class="row" style="height: 100px; width: auto">
+         <div class="row" style="height: 100px;">
             <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
             <div class="col-sm-3" style="text-align: center;">
                <button class="btn btn-outline-success btn-sm" style="margin: 10px;text-align: center;">
-                   <a href="Accueil.html">Accueil</a>
+                  <a href="Accueil.html">Accueil</a>
                </button>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
+               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+               <a href="AdministrationBdd.html">Administration des tables</a>
+               </button>
+            </div>
+            <div class="col-sm-3">
+               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+               <a href="MessagePage.html">Modèles de messages</a>
+               </button>
+            </div>
+            <div class="col-sm-3" >
+               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+               <a href="SendMessage.html">Programmation</a>
+               </button>
+            </div>
+         </div>
+      </div>
+
+      <div class="container">
+         <div class="row" style="height: 100px; width: auto">
+            <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
+            <div class="col-sm-3">
                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
                Clients web
                </button>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
                Pharmacies
                </button>
             </div>
-            <div class="col-sm-2" >
+            <div class="col-sm-3" >
                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
                Hôpitaux
                </button>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
                Crèches
                </button>
@@ -117,7 +138,7 @@
                       <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Liste des messages</h3>
                       <div class="card-body">
                           <div id="table" class="table-editable">
-                              <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                              <span class="table-add float-right mb-3 mr-2"><a href="CreationMailPage.html" class="text-success"><i
                     class="fas fa-plus" aria-hidden="true"></i></a></span>
                               <table class="table table-hover table-bordered table-responsive-md table-striped text-center "
                                 id="dt-select">
