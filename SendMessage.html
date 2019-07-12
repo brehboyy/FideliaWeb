@@ -28,14 +28,14 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
 
-      <!-- Font Awesome -->
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-      <!-- Bootstrap core CSS -->
-      <link href="css/bootstrap.min.css" rel="stylesheet">
-      <!-- Material Design Bootstrap -->
-      <link href="css/mdb.min.css" rel="stylesheet">
-      <!-- Your custom styles (optional) -->
-      <link href="css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body style="background-color: white;">
@@ -74,9 +74,8 @@
             <div class="card-body">
                 <div id="table" class="table-editable">
                     <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-          class="fas fa-plus" aria-hidden="true"></i></a></span>
-                    <table class="table table-bordered table-responsive-md table-striped text-center"
-                      id="dt-select">
+                                class="fas fa-plus" aria-hidden="true"></i></a></span>
+                    <table class="table table-bordered table-responsive-md table-striped text-center" id="dt-select">
                         <thead>
                             <tr>
                                 <th class="text-center">Titre</th>
@@ -85,41 +84,11 @@
                                 <th class="text-center">Catégorie</th>
                                 <th class="text-center">Date</th>
                                 <th class="text-center">Action</th>
+                                <th class="text-center">Programmation</th>
                                 <th class="text-center">Envoyer</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="pt-3-half" contenteditable="true">Promotion sur l'article 1</td>
-                                <td class="pt-3-half" contenteditable="true">Promotion sur un article</td>
-                                <td class="pt-3-half" contenteditable="true">Mail</td>
-                                <td class="pt-3-half" contenteditable="true">Promotion</td>
-                                <td class="pt-3-half" contenteditable="true">2019-07-07</td>
-                                <td>
-                                    <span class="table-remove"><button type="button"
-                        class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span>
-                                </td>
-                                 <td class="pt-3-half">
-                                    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-paper-plane"
-                          aria-hidden="true"></i></a></span>
-                                </td>
-                            </tr>
-                            <!-- This is our clonable table line -->
-                            <tr>
-                                <td class="pt-3-half" contenteditable="true">Arrivage nouveau produit</td>
-                                <td class="pt-3-half" contenteditable="true">Nouveau produit</td>
-                                <td class="pt-3-half" contenteditable="true">SMS</td>
-                                <td class="pt-3-half" contenteditable="true">Nouveauté</td>
-                                <td class="pt-3-half" contenteditable="true">2019-07-07</td>
-                                <td>
-                                    <span class="table-remove"><button type="button"
-                              class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span>
-                                </td>
-                                 <td class="pt-3-half">
-                                    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-paper-plane"
-                          aria-hidden="true"></i></a></span>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -127,19 +96,134 @@
         </div>
     </div>
 
-    <footer>
-    </footer>
+
+
+    <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label>Selon le champs </label>
+                        <input type="number" name="numberFrequence" value="numberFrequence">
+
+                        <select class="browser-default custom-select mb-4" id="select">
+                            <option value="" disabled="" selected="">Champs</option>
+                            <option value="1">Produit</option>
+                            <option value="2">Date de commande</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <!-- Default checked -->
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="defaultChecked2"
+                                name="defaultExampleRadios2" checked>
+                            <label class="custom-control-label" for="defaultChecked2">Permanent</label>
+                        </div>
+                        <!-- Default unchecked -->
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="defaultUnchecked2"
+                                name="defaultExampleRadios2">
+                            <label class="custom-control-label" for="defaultUnchecked2">Occasionnellement</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Tous les </label>
+                        <input type="number" name="numberFrequence">
+
+                        <select class="browser-default custom-select mb-4" id="select">
+                            <option value="" disabled="" selected="">Fréquence</option>
+                            <option value="1">Jours</option>
+                            <option value="2">Semaines</option>
+                            <option value="3">Mois</option>
+                            <option value="4">Trimestres</option>
+                            <option value="5">Semestres</option>
+                            <option value="6">Années</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>A partir de </label>
+                        <div class="md-form">
+                            <input type="date" id="inputMDEx" class="form-control">
+                            <label for="inputMDEx">Choissisez votre date</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Durant </label>
+                        <input type="number" name="numberDuring">
+
+                        <select class="browser-default custom-select mb-4" id="select">
+                            <option value="" disabled="" selected="">Fréquence</option>
+                            <option value="1">Jours</option>
+                            <option value="2">Semaines</option>
+                            <option value="3">Mois</option>
+                            <option value="4">Trimestres</option>
+                            <option value="5">Semestres</option>
+                            <option value="6">Années</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary">Sauvegarder</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+        </footer>
 </body>
 
-  <!-- SCRIPTS -->
-  <!-- JQuery -->
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="js/popper.min.js"></script>
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="js/mdb.min.js"></script>
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+
+<script type="text/javascript">
+    $('tbody').ready(function () {
+        $.ajax({
+            url: 'http://localhost:8888/apifidelia/tests/public/message.php/getall',
+            type: 'GET',
+            cache: false
+        }).done(function (response) {
+            let result = JSON.parse(response);
+            console.log(result);
+            let output = "";
+            $.each(result.result, function (key, val) { //Titre	Objet	Type	Catégorie	Date
+                output += '<tr>';
+                output += '<td class="pt-3-half" contenteditable="true">' + val.Titre_Modele_Message + '</td>';
+                output += '<td class="pt-3-half" contenteditable="true">' + val.Objet_Modele_Message + '</td>';
+                output += '<td class="pt-3-half" contenteditable="true">' + val.Type_Modele_Message + '</td>';
+                output += '<td class="pt-3-half" contenteditable="true">' + val.Categorie_Modele_Message + '</td>';
+                output += '<td class="pt-3-half" contenteditable="true">' + val.Date_Modele_Message + '</td>';
+                output += '<td><span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
+                output += '<td><span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0" data-toggle="modal" data-target="#basicExampleModal">Programmer</button></span></td>';
+                output += '<td class="pt-3-half"><span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-paper-plane" aria-hidden="true"></i></a></span></td>';
+                output += '</tr>';
+            });
+            $('tbody').html(output);
+
+        }).fail(error => {
+            console.log(error);
+        });
+    });
+</script>
+
 </html>
 <style>
     .buttonAllModelLeft {
@@ -147,7 +231,7 @@
         size: 10px;
         margin: 10px;
     }
-    
+
     .buttonAllModelRight {
         width: 800px;
         size: 10px;
