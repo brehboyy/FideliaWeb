@@ -96,31 +96,31 @@
         </div>
     </header>
 
-          <div class="container">
-         <div class="row" style="height: 100px;">
+    <div class="container">
+        <div class="row" style="height: 100px;">
             <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
             <div class="col-sm-3" style="text-align: center;">
-               <button class="btn btn-outline-success btn-sm" style="margin: 10px;text-align: center;">
-                  <a href="Accueil.html">Accueil</a>
-               </button>
+                <button class="btn btn-outline-success btn-sm" style="margin: 10px;text-align: center;">
+                    <a href="Accueil.html">Accueil</a>
+                </button>
             </div>
             <div class="col-sm-3">
-               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               <a href="AdministrationBdd.html">Administration des tables</a>
-               </button>
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="AdministrationBdd.html">Administration des tables</a>
+                </button>
             </div>
             <div class="col-sm-3">
-               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               <a href="MessagePage.html">Modèles de messages</a>
-               </button>
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="MessagePage.html">Modèles de messages</a>
+                </button>
             </div>
-            <div class="col-sm-3" >
-               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               <a href="SendMessage.html">Programmation</a>
-               </button>
+            <div class="col-sm-3">
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="SendMessage.html">Programmation</a>
+                </button>
             </div>
-         </div>
-      </div>
+        </div>
+    </div>
     <div class="container">
         <select class="browser-default custom-select notRemove" id="selectTable">
         </select>
@@ -144,11 +144,21 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Nom du tag</span>
                     </div>
-                    <input id="nom_tag" type="text" class="form-control" aria-label="Default" placeholder="Entrez le nom du tag"
-                        aria-describedby="inputGroup-sizing-default">
+                    <input id="nom_tag" type="text" class="form-control" aria-label="Default"
+                        placeholder="Entrez le nom du tag" aria-describedby="inputGroup-sizing-default">
                     <div class="input-group-append">
                         <button class="btn btn-indigo" type="button" id="setTag">Creer un tag</button>
                     </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon04" id="pathcsv">
+                    <label class="custom-file-label" for="inputGroupFile04">Importez un fichier csv</label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-md btn-outline-mdb-color btn-indigo text-light m-0 px-3 py-2 z-depth-0 waves-effect" type="button" id="impoterCSV">Importer</button>
                 </div>
             </div>
         </div>

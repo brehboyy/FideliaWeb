@@ -44,13 +44,13 @@ let baseUrl = 'http://localhost:8888/apifidelia/tests/public/';
                     let compt = 0;
                     for (var property in val) {
                         if (val.hasOwnProperty(property)) {
-                            if(compt == 0)ID_champs = property;
+                            if (compt == 0) ID_champs = property;
                             output2 += '<td class="pt-3-half" contenteditable="false">' + val[property] + '</td>';
                             compt++;
                         }
                     }
                     output2 += '<td><span class="table-remove"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Edit</button></span></td>';
-                    output2 += '<td><span class="table-remove"><button type="button" onclick="deleteRow(\''+ID_champs+'\','+val[ID_champs]+')" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
+                    output2 += '<td><span class="table-remove"><button type="button" onclick="deleteRow(\'' + ID_champs + '\',' + val[ID_champs] + ')" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
                     output2 += '</tr>';
                 });
                 $('tbody').html(output2);
@@ -60,6 +60,29 @@ let baseUrl = 'http://localhost:8888/apifidelia/tests/public/';
             });
         }
     });
+
+    //========================Importer csv ===================================
+    $('#impoterCSV').click(function (data) {
+        var file_data = $('#pathcsv').prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+        $.ajax({
+            url: baseUrl + 'systeme.php/importCSV', // point to server-side PHP script 
+            dataType: 'text',  // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function (php_script_response) {
+                let result = JSON.parse(php_script_response);
+                alert(result.message); // display response from the PHP script, if any
+            }
+        });
+    })
+
+
+
     $(document).ready(function () {
         $('.dataTables_length').addClass('bs-select');
     });
@@ -75,15 +98,12 @@ let baseUrl = 'http://localhost:8888/apifidelia/tests/public/';
             data: { 'listId': JSON.stringify(listId), 'nom_tag': JSON.stringify($('#nom_tag').val()) },
             cache: false
         }).done(function (response) {
-            
+
             console.log(response);
 
         }).fail(error => {
             console.log(error);
         });
-
-
-        console.log($("tbody > tr:visible"));
     });
     //========================= End set tag ==========================
     //=========================Dropdown filter table ==========================
@@ -215,20 +235,21 @@ let baseUrl = 'http://localhost:8888/apifidelia/tests/public/';
     }
 
 
+
     //=========================END Dropdown filter table ==========================
 
 
 })(jQuery);
 
-function deleteRow(nom_champs,id_row){
-    console.log(nom_champs,id_row);
+function deleteRow(nom_champs, id_row) {
+    console.log(nom_champs, id_row);
     $.ajax({
         url: baseUrl + 'systeme.php/delete',
         type: 'POST',
-        data: { 'id' : id_row, 'table' : $('#selectTable').val(), 'champs' : nom_champs},
+        data: { 'id': id_row, 'table': $('#selectTable').val(), 'champs': nom_champs },
         cache: false
     }).done(function (response) {
-        
+
         console.log(response);
 
     }).fail(error => {

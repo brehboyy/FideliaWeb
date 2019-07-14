@@ -55,7 +55,7 @@
     }
 
     function showValidate(input) {
-        var thisAlert = $(input).parent();
+        //var thisAlert = $(input).parent();
 
         $(thisAlert).addClass('alert-validate');
     }
