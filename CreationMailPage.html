@@ -323,13 +323,24 @@
         link: 'http://[subscribe]/'
       }];
       
-      var mergeTags = [{
-        name: 'tag 1',
-        value: '[tag1]'
-      }, {
-        name: 'tag 2',
-        value: '[tag2]'
-      }];
+      var mergeTags = (function(){
+        console.log('test');
+        $.ajax({
+            url: 'http://localhost:8888/apifidelia/tests/public/balise.php/getall',
+            type: 'GET',
+            cache: false
+          }).done(function (response) {
+            let result = JSON.parse(response);
+            var lstBalise = new Array();
+            $.each(result.result, function(key, val){
+              lstBalise.push({name: val.Nom_balise, value: '{{'+val.Nom_balise+'}}'});
+            });
+            return lstBalise;
+          }).fail(error => {
+            console.log(error.responseText);
+          });
+      
+      });
       
       var mergeContents = [{
         name: 'content 1',
@@ -351,8 +362,8 @@
       var beeConfig = {
         uid: 'test1-clientside',
         container: 'bee-plugin-container',
-        autosave: 15,
-        language: 'en-US',
+        autosave: 30,
+        language: 'fr-FR',
         trackChanges: true,
         specialLinks: specialLinks,
         mergeTags: mergeTags,
@@ -448,7 +459,7 @@
       
       document.getElementById('choose-template').addEventListener('change', loadTemplate, false);
       
-      request(
+      /*request(
         'POST',
         'https://auth.getbee.io/apiauth',
         'grant_type=password&client_id=08be1dd5-13ac-4744-8b55-f3748fdd7406&client_secret=KSNip7ZOqbCzkxOnLaHOmQWWxf6xr8LuDRGFFcfkX0gmzsIAaDi0',
@@ -465,7 +476,7 @@
                 bee.start(template);
               });
           });
-        });
+        });*/
 
   var allTagsHTML ='';
   var allTagsforBDD = new Array();
