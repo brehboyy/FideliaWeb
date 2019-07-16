@@ -52,6 +52,7 @@
             </div>
          </div>
       </header>
+
       <div class="container">
          <div class="row" style="height: 100px;">
             <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
@@ -77,8 +78,10 @@
             </div>
          </div>
       </div>
+
       <div class="container">
-         <form class="border border-light p-5" action="ManageMessage.html" method="POST">
+         <form class="border border-light p-5" id="sauvegarder">
+          <div id="IDModeleMessage"></div>
             <div class="permanent">
                <!-- Default checked -->
                <div class="custom-control custom-radio">
@@ -94,9 +97,9 @@
             <div id="permanent">
                <div>
                   <label>A partir de  </label>
-                  <div class="md-form">
-                     <input type="date" id="dateDebut" class="form-control">
-                     <label for="inputMDEx">Choisir la date</label>
+                  <div>
+                     <label>Choisir la date</label>
+                     <input type="datetime-local" id="dateDebut">
                   </div>
                </div>
 
@@ -111,29 +114,7 @@
                </div>
                <div>
                   <label>Tous les </label>
-                  <input type="number" name="numberFrequence">
-                  <select class="browser-default custom-select mb-4" id="selectFrequence">
-                     <option value="" disabled="" selected="">Fréquence</option>
-                     <option value="1">Jours</option>
-                     <option value="2">Semaines</option>
-                     <option value="3">Mois</option>
-                     <option value="4">Trimestres</option>
-                     <option value="5">Semestres</option>
-                     <option value="6">Années</option>
-                  </select>
-               </div>
-               <div>
-                  <label>Durant </label>
-                  <input type="number" name="numberDuring">
-                  <select class="browser-default custom-select mb-4" id="selectDuring">
-                     <option value="" disabled="" selected="">Durant</option>
-                     <option value="1">Jours</option>
-                     <option value="2">Semaines</option>
-                     <option value="3">Mois</option>
-                     <option value="4">Trimestres</option>
-                     <option value="5">Semestres</option>
-                     <option value="6">Années</option>
-                  </select>
+                  <input type="number" name="numberFrequence" id="numberFrequence">
                </div>
             </div>
             <div id="occasionnellement">
@@ -182,7 +163,7 @@
                 });
                $( "#occasionnellement" ).hide( "slow", function() {
                 });
-              break;
+              break; 
       
             }
           });
@@ -195,94 +176,41 @@
       });
       $('#dateDebut').change(function(){
           var inputdateDebut = new Date(this.value);
-          dateDebut = inputdateDebut.getDate() + '-' + (inputdateDebut.getMonth()+1) + '-' + inputdateDebut.getFullYear();
+          /*dateDebut = inputdateDebut.getDate() + '-' + (inputdateDebut.getMonth()+1) + '-' + inputdateDebut.getFullYear() + ' ' + inputdateDebut.getHours() + ':' + inputdateDebut.getMinutes() +':00';*/
+          dateDebut = inputdateDebut.getFullYear() + '-' + (inputdateDebut.getMonth()+1) + '-' + inputdateDebut.getDate() + ' ' + inputdateDebut.getHours() + ':' + inputdateDebut.getMinutes() +':' + inputdateDebut.getSeconds();
           console.log('Date début permanent (dateDebut) : ' + dateDebut);
 
       });
-      var numberFrequence = $('#numberFrequence').val();
-          console.log('numberFrequence : ' + numberFrequence);
-
-      $('#selectFrequence').change(function(){
-      var selectFrequence = $( "#selectFrequence option:selected" ).text();
-          console.log('selectFrequence : ' + selectFrequence);
-      });
-
-      var numberDuring = $('#numberDuring').val();
-          console.log('numberDuring : ' + numberDuring);
-
-      $('#selectDuring').change(function(){
-      var selectDuring = $( "#selectDuring option:selected" ).text();
-          console.log('selectDuring : ' + selectDuring);
-      });
-
-      $('#selectCondition').change(function(){
-      var selectCondition = $( "#selectCondition option:selected" ).text();
-          console.log('selectCondition : ' + selectCondition);
-      });
       
-      /*
-        var beeConfig = {
-          uid: 'test1-clientside',
-          container: 'bee-plugin-container',
-          autosave: 15,
-          language: 'en-US',
-          trackChanges: true,
-          specialLinks: specialLinks,
-          mergeTags: mergeTags,
-          mergeContents: mergeContents,
-          contentDialog: {
-            specialLinks: {
-              label: 'Add a custom Special Link',
-              handler: userInput('Enter the deep link:', {
-                type: 'custom',
-                label: 'external special link',
-                link: 'http://www.example.com'
-              })
-            },
-            mergeTags: {
-              label: 'Add custom tag 2',
-              handler: userInput('Enter the merge tag:', {
-                name: 'name',
-                value: '[name]'
-              })
-            },
-            mergeContents: {
-              label: 'Choose a custom merge content',
-              handler: userInput('Enter the merge content:', {
-                name: 'my custom content',
-                value: '{my-custom-content}'
-              })
-            },
-            rowDisplayConditions: {
-              label: 'Open builder',
-              handler: userInput('Enter the row display condition:', {
-                type: 'People',
-                label: 'Person is a developer',
-                description: 'Check if a person is a developer',
-                before: "{if job == 'developer'}",
-                after: '{endif}'
-              })
-            },
-          },
-          onSave: function (jsonFile, htmlFile) {
-            console.log(jsonFile, htmlFile);
-            let messageObject = { 'NbTempsFrequence': $('#numberFrequence').val(), 'PeriodeFrequence': $('#example').val(), 'DateDebut': $('#example').val(), 'NbTempsDurant': $('#example').val(), 'PeriodeDurant': $('#example').val() };
+      $('#sauvegarder').submit(function(){
+          var selectCondition = $( "#selectCondition option:selected" ).text();
+          var numberFrequence = $('#numberFrequence').val();
+          /*var ID_Modele_Message = $('#ID_Modele_Message').val();*/
+          var ID_Modele_Message = 1;
+          console.log(ID_Modele_Message);
+          console.log(numberFrequence);
+          console.log(dateDebut);
+          console.log(selectCondition);
+            let programmationObject = { 
+              'ID_Modele_Message': ID_Modele_Message,
+              'NbTempsJour': numberFrequence, 
+              'DateEnvoi': dateDebut, 
+              'Condition': selectCondition };
         
             $.ajax({
-              url: 'http://localhost:8888/apifidelia/tests/public/message.php/insertProgrammation',
+              url: 'http://localhost/apifidelia/tests/public/message.php/insertProgrammation',
               type: 'POST',
               dataType: 'json',
-              data: { 'message': JSON.stringify(messageObject) },
+              data: { 'programmation': JSON.stringify(programmationObject) },
               cache: false
             }).done(function (response) {
-              let result = JSON.parse(response);
-              alert(result.message);
+              alert(response.message);
             }).fail(error => {
               console.log(error.responseText);
             });
-          }
-        };*/
-      });
+            return false;
+          })
+        });
       
       
    </script>
