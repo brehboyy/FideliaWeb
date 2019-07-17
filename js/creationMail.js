@@ -242,22 +242,6 @@
         }
     });
 
-    $("#delTags").click(function () {
-    alert("gdsfgsd");
-    var allTagsHTML = '';
-        var singleValues = $("#TagToAdd").val();
-            allTagsforBDD.push(singleValues);
-            console.log(allTagsforBDD);
-            // foreach
-            // add to allTagsHTML
-                $.each(allTagsforBDD,function(index, value){
-                    allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm" id="delTags">' + value + ' <i class="fas fa-times" ></i> </button>';
-            
-                });
-            $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
-
-            $("#exampleModalLabel").html('Tag supprimé avec succès');
-    });
 
 
 })(jQuery);
