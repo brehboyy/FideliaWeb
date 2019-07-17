@@ -54,19 +54,6 @@
             </div>
             <div class="col-sm-6" style="margin-top: 20px;">
                <p style="text-align:center; font-size:1.2em;">Fidélia</p>
-               <p style="text-align:center;">Mail ou sms</p>
-            </div>
-            <div class="row col-sm-3" style="margin-top: 20px;">
-               <div class="col-sm-6">
-                  <button class="btn btn-outline-primary btn-sm">
-                     <a href="CreationMailPage.html"> Mail</a>
-                  </button>
-               </div>
-               <div class="col-sm-6">
-                  <button class="btn btn-outline-primary btn-sm">
-                     SMS
-                  </button>
-               </div>
             </div>
          </div>
       </div>
@@ -122,7 +109,7 @@
                                  <th class="text-center">Date</th>
                                  <th class="text-center">Supprimer</th>
                                  <th class="text-center">Editer</th>
-                                 <th class="text-center">Envoyer</th>
+                                 <th class="text-center">Programmer</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -134,7 +121,80 @@
             </div>
          </div>
       </div>
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<div class="container">
+         <form class="border border-light p-5" id="sauvegarder">
+          <div id="IDModeleMessage"></div>
+            <div class="permanent">
+              <label>Choisir la fréquence d'envoi :</label>
+               <!-- Default checked -->
+               <div class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input rButtonPermanent" id="defaultChecked2" name="defaultExampleRadios2" checked value="Permanent">
+                  <label class="custom-control-label" for="defaultChecked2">Permanent</label>
+               </div>
+               <!-- Default unchecked -->
+               <div class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input rButtonPermanent" id="defaultUnchecked2" name="defaultExampleRadios2" value="Occasionnellement">
+                  <label class="custom-control-label" for="defaultUnchecked2">Occasionnellement</label>
+               </div>
+            </div>
+            <div id="permanent">
+              <br>
+               <div>
+                  <label>A partir de :</label>
+                  <div>
+                     <label>Choisir la date :</label>
+                     <input type="datetime-local" id="dateDebut">
+                  </div>
+               </div>
 
+               <div>
+                  <label>Selon la condition :</label>
+                  <select class="browser-default custom-select mb-4" id="selectCondition">
+                     <option value="" disabled="" selected="">Condition</option>
+                     <option value="1">Produit de la dernière commande</option>
+                     <option value="2">Date de la dernière commande</option>
+                     <option value="3">Date d'anniversaire du nourrisson</option>
+                  </select>
+               </div>
+               <div>
+                  <label>Tous les :</label>
+                  <input type="number" name="numberFrequence" id="numberFrequence">
+               </div>
+            </div>
+            <div id="occasionnellement">
+               <div>
+                  <label>A partir de :</label>
+                  <div>
+                     <label>Choisir la date</label>
+                     <input type="datetime-local" id="dateOcca">
+                  </div>
+               </div>
+            </div>
+            <!--Save-->
+            <div class="text-center mb-3">
+               <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Sauvegarder</button>
+            </div>
+         </form>
+      </div>
+      </div>
+      <div style="text-align: right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
 
       <footer>
       </footer>
@@ -147,6 +207,93 @@
       <script type="text/javascript" src="js/mdb.min.js"></script>
       <script src="js/main.js"></script>
       <script src="js/accueil.js"></script>
+         <script type="text/javascript">
+
+      var result;
+      $(document).ready(function(){
+          $( "#occasionnellement" ).hide();
+          $('.permanent input[type="radio"]').click(function(){
+            result = $(this).val();
+            switch(result){
+              case 'Occasionnellement':
+                $( "#permanent" ).hide( "slow", function() {
+                });
+               $( "#occasionnellement" ).show( "slow", function() {
+                });
+              break;
+              case 'Permanent':
+                $( "#permanent" ).show( "slow", function() {
+                });
+               $( "#occasionnellement" ).hide( "slow", function() {
+                });
+              break; 
+            }
+        console.log(result);
+          });
+      
+      
+      $('#dateOcca').change(function(){
+          var inputdateOcca = new Date(this.value);
+          dateOcca = inputdateOcca.getFullYear() + '-' + (inputdateOcca.getMonth()+1) + '-' + inputdateOcca.getDate() + ' ' + inputdateOcca.getHours() + ':' + inputdateOcca.getMinutes() +':' + inputdateOcca.getSeconds()
+          console.log('Date occasionnellement (dateOcca) : ' + dateOcca);
+      });
+      $('#dateDebut').change(function(){
+          var inputdateDebut = new Date(this.value);
+          dateDebut = inputdateDebut.getFullYear() + '-' + (inputdateDebut.getMonth()+1) + '-' + inputdateDebut.getDate() + ' ' + inputdateDebut.getHours() + ':' + inputdateDebut.getMinutes() +':' + inputdateDebut.getSeconds();
+          console.log('Date début permanent (dateDebut) : ' + dateDebut);
+
+      });
+      
+      $('#sauvegarder').submit(function(){
+        //console.log('result :' +result);
+          var selectCondition = $( "#selectCondition option:selected" ).text();
+          if (selectCondition = 'Condition') {selectCondition = 'Aucune condition'}
+          var numberFrequence = $('#numberFrequence').val();
+          /*var ID_Modele_Message = $('#ID_Modele_Message').val();*/
+          var ID_Modele_Message = 1;
+
+          var dateEnvoi;
+            switch(result){
+              case 'Occasionnellement':
+                dateEnvoi = dateOcca;
+                numberFrequence = 0;
+                console.log(ID_Modele_Message);
+                console.log(numberFrequence);
+                console.log(dateOcca);
+                console.log(result);
+              break;
+              case 'Permanent':
+                dateEnvoi = dateDebut;
+                console.log(ID_Modele_Message);
+                console.log(numberFrequence);
+                console.log(dateDebut);
+                console.log(result);
+              break; 
+            }
+
+            let programmationObject = { 
+              'ID_Modele_Message': ID_Modele_Message,
+              'NbTempsJour': numberFrequence, 
+              'DateEnvoi': dateEnvoi, 
+              'Condition': selectCondition };
+        
+            $.ajax({
+              url: 'http://localhost/apifidelia/tests/public/message.php/insertProgrammation',
+              type: 'POST',
+              dataType: 'json',
+              data: { 'programmation': JSON.stringify(programmationObject) },
+              cache: false
+            }).done(function (response) {
+              alert(response.message);
+            }).fail(error => {
+              console.log(error.responseText);
+            });
+            return false;
+          })
+        });
+      
+      
+   </script>
 </body>
 
 </html>
