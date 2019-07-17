@@ -4,7 +4,6 @@
         type: 'GET',
         cache: false
     }).done(function (response) {
-        console.log(response);
         let result = JSON.parse(response);
         let output = "";
         output += '<option selected value="-1">Selectionner table</option>';
@@ -62,24 +61,27 @@
         link: 'http://[subscribe]/'
     }];
 
-    var mergeTags = (function () {
-    console.log("test");
+    let mergeTags = function(){
+        var lstBalise = [];
         $.ajax({
             url: baseUrl + 'balise.php/getall',
             type: 'GET',
             cache: false
         }).done(function (response) {
             let result = JSON.parse(response);
-            var lstBalise = new Array();
             $.each(result.result, function (key, val) {
                 lstBalise.push({ name: val.Nom_balise, value: '{{' + val.Nom_balise + '}}' });
             });
-            return lstBalise;
+            callback = lstBalise;
         }).fail(error => {
             console.log(error.responseText);
         });
+        return lstBalise;
+    }();
 
-    });
+
+   
+
 
     var mergeContents = [{
         name: 'content 1',
@@ -227,7 +229,7 @@
         var singleValues = $("#TagToAdd").val();
         if (jQuery.inArray(singleValues, allTagsforBDD) == "-1") {
             allTagsforBDD.push(singleValues);
-            allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm">' + singleValues + ' <i class="fas fa-times" ></i> </button>';
+            allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm" id="delTags">' + singleValues + ' <i class="fas fa-times" ></i> </button>';
             $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
 
             $("#exampleModalLabel").html('Tag ajouté avec succès');
