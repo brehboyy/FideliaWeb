@@ -93,16 +93,16 @@
                             <label for="inputPlaceholderEx">Objet du mail</label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 typeclient">
                         <select class="browser-default custom-select">
                             <option selected>Liste de types de clients</option>
-                            <option value="1">Clients web</option>
-                            <option value="3">Pharmacies</option>
-                            <option value="2">Hôpitaux</option>
-                            <option value="2">Crèches</option>
+                            <option value="Clients web">Clients web</option>
+                            <option value="Pharmacies">Pharmacies</option>
+                            <option value="Hôpitaux">Hôpitaux</option>
+                            <option value="Crèches">Crèches</option>
                         </select>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 typeEvenement">
                         <select class="browser-default custom-select" id="categorie">
                             <option selected>Liste d'évènements</option>
                             <option value="Relance">Relance</option>
@@ -158,5 +158,8 @@
 <script src="js/main.js"></script>
 <script type="text/javascript"  src="js/creationMail.js">
 </script>
+<script type="text/javascript">
+        //var test = localStorage.getItem('ID_Modele_Message');
 
+         </script>
 </html>

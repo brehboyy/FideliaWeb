@@ -1,13 +1,18 @@
-(function ($) {
+(function($) {
     $.ajax({
         url: baseUrl + 'tag.php/getall',
         type: 'GET',
         cache: false
-    }).done(function (response) {
-        let result = JSON.parse(response);
+    }).done(function(response) {
+        let result;
+        try {
+            result = JSON.parse(response);
+        } catch (error) {
+            result = response;
+        }
         let output = "";
         output += '<option selected value="-1">Selectionner table</option>';
-        $.each(result.result, function (key, val) { //Titre	Objet	Type	Catégorie	Date
+        $.each(result.result, function(key, val) { //Titre    Objet    Type    Catégorie    Date
             output += '<option value="' + val.Nom_Tag + '">' + val.Nom_Tag + '</option>';
         });
         $('#TagToAdd').html(output);
@@ -15,9 +20,9 @@
         console.log(error);
     });
 
-    var request = function (method, url, data, type, callback) {
+    var request = function(method, url, data, type, callback) {
         var req = new XMLHttpRequest();
-        req.onreadystatechange = function () {
+        req.onreadystatechange = function() {
             if (req.readyState === 4 && req.status === 200) {
                 var response = JSON.parse(req.responseText);
                 callback(response);
@@ -42,7 +47,7 @@
         req.send(data);
     };
 
-    var save = function (filename, content) {
+    var save = function(filename, content) {
         saveAs(
             new Blob([content], {
                 type: 'text/plain;charset=utf-8'
@@ -61,26 +66,25 @@
         link: 'http://[subscribe]/'
     }];
 
-    let mergeTags = function(){
+    let mergeTags = function() {
         var lstBalise = [];
         $.ajax({
             url: baseUrl + 'balise.php/getall',
             type: 'GET',
             cache: false
-        }).done(function (response) {
+        }).done(function(response) {
             let result = JSON.parse(response);
-            $.each(result.result, function (key, val) {
-                lstBalise.push({ name: val.Nom_balise, value: '{{' + val.Nom_balise + '}}' });
+            $.each(result.result, function(key, val) {
+                lstBalise.push({
+                    name: val.Nom_balise,
+                    value: '{{' + val.Nom_balise + '}}'
+                });
             });
         }).fail(error => {
             console.log(error);
         });
         return lstBalise;
     }();
-
-
-   
-
 
     var mergeContents = [{
         name: 'content 1',
@@ -140,18 +144,18 @@
                 })
             },
         },
-        onChange: function (jsonFile, response) {
+        onChange: function(jsonFile, response) {
             console.log('json', jsonFile);
             console.log('response', response);
         },
-        onSave: function (jsonFile, htmlFile) {
+        onSave: function(jsonFile, htmlFile) {
             let messageObject = {
                 'Titre': $('#titre').val(),
                 'Corps': htmlFile,
                 'Object': $('#object').val(),
                 'Type': 'Mail',
                 'Categorie': $('#categorie').val(),
-                'Template' : jsonFile
+                'Template': jsonFile
             };
 
             $.ajax({
@@ -162,35 +166,35 @@
                     'message': JSON.stringify(messageObject)
                 },
                 cache: false
-            }).done(function (response) {
+            }).done(function(response) {
                 let result = JSON.parse(response);
                 alert(result.message);
             }).fail(error => {
                 console.log(error.responseText);
             });
         },
-        onSaveAsTemplate: function (jsonFile) { // + thumbnail? 
+        onSaveAsTemplate: function(jsonFile) { // + thumbnail? 
             save('newsletter-template.json', jsonFile);
         },
-        onAutoSave: function (jsonFile) { // + thumbnail? 
+        onAutoSave: function(jsonFile) { // + thumbnail? 
             console.log(new Date().toISOString() + ' autosaving...');
             window.localStorage.setItem('newsletter.autosave', jsonFile);
         },
-        onSend: function (htmlFile) {
+        onSend: function(htmlFile) {
             //write your send test function here
         },
-        onError: function (errorMessage) {
+        onError: function(errorMessage) {
             console.log('onError ', errorMessage);
         }
     };
 
     var bee = null;
 
-    var loadTemplate = function (e) {
+    var loadTemplate = function(e) {
         var templateFile = e.target.files[0];
         var reader = new FileReader();
 
-        reader.onload = function () {
+        reader.onload = function() {
             var templateString = reader.result;
             var template = JSON.parse(templateString);
             bee.load(template);
@@ -206,33 +210,90 @@
         'https://auth.getbee.io/apiauth',
         'grant_type=password&client_id=08be1dd5-13ac-4744-8b55-f3748fdd7406&client_secret=KSNip7ZOqbCzkxOnLaHOmQWWxf6xr8LuDRGFFcfkX0gmzsIAaDi0',
         'application/x-www-form-urlencoded',
-        function (token) {
-            BeePlugin.create(token, beeConfig, function (beePluginInstance) {
+        function(token) {
+
+            BeePlugin.create(token, beeConfig, function(beePluginInstance) {
                 bee = beePluginInstance;
-                request(
-                    'GET',
-                    'https://rsrc.getbee.io/api/templates/m-bee',
-                    null,
-                    null,
-                    function (template) {
-                        bee.start(template);
+
+                var getUrlParameter = function getUrlParameter(sParam) {
+                    var sPageURL = window.location.search.substring(1),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                        }
+                    }
+                };
+
+                var ID_Modele_Message = getUrlParameter('ID_Modele_Message');
+                if (ID_Modele_Message != null) {
+                    $.ajax({
+                        url: baseUrl + 'message.php/GetById/' + ID_Modele_Message,
+                        type: 'GET'
+                    }).done(function(response) {
+                        let result;
+                        try {
+
+                            result = JSON.parse(response);
+                        } catch (error) {
+                            result = response;
+                        }
+                        console.log(result);
+                        console.log(result.result[0].ID_Modele_Message);
+                        $("#titre").val(result.result[0].Titre_Modele_Message);
+                        $("#object").val(result.result[0].Objet_Modele_Message);
+                        //$("div.typeclient select").val(result.result[0].Objet_Modele_Message);
+                        $("div.typeEvenement select").val(result.result[0].Categorie_Modele_Message);
+                        console.log(result.result[0].Template_Modele_Message);
+                        bee.start(JSON.parse(result.result[0].Template_Modele_Message));
+                    }).fail(error => {
+                        console.log(error);
                     });
+                } else {
+                    $.ajax({
+                        url: baseUrl + 'message.php/GetById/' + 3,
+                        type: 'GET'
+                    }).done(function(response) {
+                        let result;
+                        try {
+
+                            result = JSON.parse(response);
+                        } catch (error) {
+                            result = response;
+                        }
+                        console.log(result);
+                        console.log(result.result[0].ID_Modele_Message);
+                        $("#titre").val(result.result[0].Titre_Modele_Message);
+                        $("#object").val(result.result[0].Objet_Modele_Message);
+                        //$("div.typeclient select").val(result.result[0].Objet_Modele_Message);
+                        $("div.typeEvenement select").val(result.result[0].Categorie_Modele_Message);
+                        console.log(result.result[0].Template_Modele_Message);
+                        bee.start(JSON.parse(result.result[0].Template_Modele_Message));
+                    }).fail(error => {
+                        console.log(error);
+                    });
+                }
             });
         });
 
     var allTagsforBDD = new Array();
-    $("#addTags").click(function () {
+    $("#addTags").click(function() {
 
-    var allTagsHTML = '';
+        var allTagsHTML = '';
         var singleValues = $("#TagToAdd").val();
         if (jQuery.inArray(singleValues, allTagsforBDD) == "-1") {
             allTagsforBDD.push(singleValues);
             // foreach
             // add to allTagsHTML
-                $.each(allTagsforBDD,function(index, value){
-                    allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
-            
-                });
+            $.each(allTagsforBDD, function(index, value) {
+                allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
+
+            });
             $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
 
             $("#exampleModalLabel").html('Tag ajouté avec succès');
@@ -240,24 +301,19 @@
             $("#exampleModalLabel").html('Ce tag a déjà été ajouté !');
         }
     });
-        $("#alltags").on('click','button', function(){ 
+    $("#alltags").on('click', 'button', function() {
         var allTagsHTML = '';
         var tag = $(this).val();
         allTagsforBDD = jQuery.grep(allTagsforBDD, function(value) {
-          return value != tag;
+            return value != tag;
         });
         // foreach
-            /*$.each(allTagsforBDD,function(index, value){
-                console.log(index + ': ' + value);
-            });*/
         // add to allTagsHTML
-            $.each(allTagsforBDD,function(index, value){
-                allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
-            
-            });
+        $.each(allTagsforBDD, function(index, value) {
+            allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
+
+        });
         $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
     });
-
-
 
 })(jQuery);
