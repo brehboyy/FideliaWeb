@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login V18</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/mdb.min.css">
+    <!--===============================================================================================-->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body style="background-color: white; overflow: scroll;">
+    <header>
+        <div class="container">
+            <div class="row" style="height: 100px;">
+                <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
+                <div class="col-sm-3">
+                    <center>
+                        <img src="images/logo.png" alt="Fidélia" style="width:150px; height:100px;">
+                    </center>
+                </div>
+                <div class="col-sm-6" style="margin-top: 20px;">
+                    <p style="text-align:center; font-size:1.2em;">Fidélia</p>
+                    <p style="text-align:center;">Mail ou sms</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row" style="height: 100px;">
+            <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
+            <div class="col-sm-3" style="text-align: center;">
+                <button class="btn btn-outline-success btn-sm" style="margin: 10px;text-align: center;">
+                    <a href="Accueil.html">Accueil</a>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="AdministrationBdd.html">Administration des tables</a>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="MessagePage.html">Modèles de messages</a>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="SendMessage.html">Programmation</a>
+                </button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-sm-12 row">
+                <div class="col-sm-6 row">
+                    <div class="col-sm-12">
+                        <div class="md-form col-sm-6">
+                            <input placeholder="Nouveau produit..." type="text" id="inputPlaceholderEx"
+                                class="form-control">
+                            <label for="inputPlaceholderEx">Titre du mail</label>
+                        </div>
+                        <div class="md-form col-sm-12">
+                            <input placeholder="Nouveau produit Matélia..." type="text" id="inputPlaceholderEx"
+                                class="form-control">
+                            <label for="inputPlaceholderEx">Objet du mail</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <select class="browser-default custom-select">
+                            <option selected>Liste de clients</option>
+                            <option value="1">Clients web</option>
+                            <option value="3">Pharmacies</option>
+                            <option value="2">Hôpitaux</option>
+                            <option value="2">Crèches</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <select class="browser-default custom-select">
+                            <option selected>Liste d'évènements</option>
+                            <option value="1">Relance</option>
+                            <option value="3">Promotion</option>
+                            <option value="2">Présentation du salon</option>
+                            <option value="2">Anniversaire</option>
+                            <option value="2">Nouveaux produits</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="col-sm-12">
+                        <label for="inputPlaceholderEx">Liste de tags</label>
+                        <select class="browser-default custom-select" id="TagToAdd">
+                            <option selected value="Test1">Test1</option>
+                            <option value="Test2">Test2</option>
+                            <option value="Test3">Test3</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm" style="margin: 10px;" id="addTags"
+                        data-toggle="modal" data-target="#basicExampleModal">
+                        Ajouter le tag
+                    </button>
+                </div>
+                <div class="col-sm-3">
+                    <div id="alltags"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 emailCreator" style="height: 2000px;">
+            <div id="bee-plugin-container"></div>
+            <div id="integrator-bottom-bar">
+                <input id="choose-template" type="hidden" style="" />
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-3">
+                <select class="browser-default custom-select">
+                    <option selected>Liste de clients</option>
+                    <option value="1">Clients web</option>
+                    <option value="3">Pharmacies</option>
+                    <option value="2">Hôpitaux</option>
+                    <option value="2">Crèches</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <select class="browser-default custom-select">
+                    <option selected>Liste d'évènements</option>
+                    <option value="1">Relance</option>
+                    <option value="3">Promotion</option>
+                    <option value="2">Présentation du salon</option>
+                    <option value="2">Anniversaire</option>
+                    <option value="2">Nouveaux produits</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="col-sm-12 emailCreator">
+            <div id="bee-plugin-container"></div>
+            <div id="integrator-bottom-bar">
+                <!-- You can change the download function to get the JSON and use this input to load it -->
+                Select template to load:
+                <input id="choose-template" type="file" />
+                <!-- You need to provide a send function to use this input field -->
+                Send test e-mail to:
+                <input id="integrator-test-emails" type="text" />
+            </div>
+        </div>
+    </div>
+    <footer>
+        <!-- Modal -->
+        <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="js/Blob.js"></script>
+<script src="js/fileSaver.js"></script>
+<script src="https://app-rsrc.getbee.io/plugin/BeePlugin.js"></script>
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript">
+</script>
+
+</html>
