@@ -227,11 +227,10 @@
         var singleValues = $("#TagToAdd").val();
         if (jQuery.inArray(singleValues, allTagsforBDD) == "-1") {
             allTagsforBDD.push(singleValues);
-            console.log(allTagsforBDD);
             // foreach
             // add to allTagsHTML
                 $.each(allTagsforBDD,function(index, value){
-                    allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm" id="delTags">' + value + ' <i class="fas fa-times" ></i> </button>';
+                    allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
             
                 });
             $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
@@ -240,6 +239,23 @@
         } else {
             $("#exampleModalLabel").html('Ce tag a déjà été ajouté !');
         }
+    });
+        $("#alltags").on('click','button', function(){ 
+        var allTagsHTML = '';
+        var tag = $(this).val();
+        allTagsforBDD = jQuery.grep(allTagsforBDD, function(value) {
+          return value != tag;
+        });
+        // foreach
+            /*$.each(allTagsforBDD,function(index, value){
+                console.log(index + ': ' + value);
+            });*/
+        // add to allTagsHTML
+            $.each(allTagsforBDD,function(index, value){
+                allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
+            
+            });
+        $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
     });
 
 
