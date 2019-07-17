@@ -7,7 +7,15 @@
             type: 'GET',
             cache: false
         }).done(function (response) {
-            let result = JSON.parse(response);
+            let result;
+            try{
+
+            result = JSON.parse(response);
+                console.log(result);
+            }
+            catch (error) {
+            result = response;
+            }
             let output = "";
             output += '<option selected value="nope">Selectionner table</option>';
             $.each(result.result, function (key, val) { //Titre	Objet	Type	Catégorie	Date
@@ -36,7 +44,6 @@
                 $.each(result.result.columns, function (key, val) { //Titre	Objet	Type	Catégorie	Date
                     output += '<th class="text-center">' + val.COLUMN_NAME + '</th>';
                 });
-                output += '<th class="text-center">Edit</th>';
                 output += '<th class="text-center">Supprimer</th>';
                 output += "</tr>";
                 $('thead').html(output);
@@ -52,7 +59,6 @@
                             compt++;
                         }
                     }
-                    output2 += '<td><span class="table-remove"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Edit</button></span></td>';
                     output2 += '<td><span class="table-remove"><button type="button" onclick="deleteRow(\'' + ID_champs + '\',' + val[ID_champs] + ')" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
                     output2 += '</tr>';
                 });
