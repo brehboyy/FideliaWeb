@@ -1,4 +1,3 @@
-
 let baseUrl = 'http://localhost:8888/apifidelia/tests/public/';
 (function ($) {
     "use strict";

@@ -1,6 +1,6 @@
 (function ($) {
     $.ajax({
-        url: 'http://localhost:8888/apifidelia/tests/public/tag.php/getall',
+        url: baseUrl + 'tag.php/getall',
         type: 'GET',
         cache: false
     }).done(function (response) {
@@ -62,13 +62,24 @@
         link: 'http://[subscribe]/'
     }];
 
-    var mergeTags = [{
-        name: 'tag 1',
-        value: '[tag1]'
-    }, {
-        name: 'tag 2',
-        value: '[tag2]'
-    }];
+    var mergeTags = (function () {
+    console.log("test");
+        $.ajax({
+            url: baseUrl + 'balise.php/getall',
+            type: 'GET',
+            cache: false
+        }).done(function (response) {
+            let result = JSON.parse(response);
+            var lstBalise = new Array();
+            $.each(result.result, function (key, val) {
+                lstBalise.push({ name: val.Nom_balise, value: '{{' + val.Nom_balise + '}}' });
+            });
+            return lstBalise;
+        }).fail(error => {
+            console.log(error.responseText);
+        });
+
+    });
 
     var mergeContents = [{
         name: 'content 1',
@@ -88,8 +99,8 @@
     var beeConfig = {
         uid: 'test1-clientside',
         container: 'bee-plugin-container',
-        autosave: 15,
-        language: 'en-US',
+        autosave: 30,
+        language: 'fr-FR',
         trackChanges: true,
         specialLinks: specialLinks,
         mergeTags: mergeTags,
@@ -133,10 +144,6 @@
             console.log('response', response);
         },
         onSave: function (jsonFile, htmlFile) {
-            console.log(jsonFile, htmlFile);
-            /*$.post('http://localhost/apifidelia/tests/public/message.php/sendMessage',{message : htmlFile, listTag : [1,2]}, function(data){
-                  console.log(data);
-            });*/
             let messageObject = {
                 'Titre': $('#titre').val(),
                 'Corps': htmlFile,
@@ -146,7 +153,7 @@
             };
 
             $.ajax({
-                url: 'http://localhost:8888/apifidelia/tests/public/message.php/insertMessage',
+                url: baseUrl + 'message.php/insertMessage',
                 type: 'POST',
                 dataType: 'json',
                 data: {
