@@ -220,21 +220,43 @@
             });
         });
 
-    var allTagsHTML = '';
     var allTagsforBDD = new Array();
-    var isfirstvalue = true;
     $("#addTags").click(function () {
 
+    var allTagsHTML = '';
         var singleValues = $("#TagToAdd").val();
         if (jQuery.inArray(singleValues, allTagsforBDD) == "-1") {
             allTagsforBDD.push(singleValues);
-            allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm" id="delTags">' + singleValues + ' <i class="fas fa-times" ></i> </button>';
+            console.log(allTagsforBDD);
+            // foreach
+            // add to allTagsHTML
+                $.each(allTagsforBDD,function(index, value){
+                    allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm" id="delTags">' + value + ' <i class="fas fa-times" ></i> </button>';
+            
+                });
             $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
 
             $("#exampleModalLabel").html('Tag ajouté avec succès');
         } else {
             $("#exampleModalLabel").html('Ce tag a déjà été ajouté !');
         }
+    });
+
+    $("#delTags").click(function () {
+    alert("gdsfgsd");
+    var allTagsHTML = '';
+        var singleValues = $("#TagToAdd").val();
+            allTagsforBDD.push(singleValues);
+            console.log(allTagsforBDD);
+            // foreach
+            // add to allTagsHTML
+                $.each(allTagsforBDD,function(index, value){
+                    allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm" id="delTags">' + value + ' <i class="fas fa-times" ></i> </button>';
+            
+                });
+            $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
+
+            $("#exampleModalLabel").html('Tag supprimé avec succès');
     });
 
 
