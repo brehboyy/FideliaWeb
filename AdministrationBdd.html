@@ -37,32 +37,6 @@
     <!-- Your custom styles (optional) -->
     <link href="css/style.css" type="text/css" rel="stylesheet">
 
-    <style>
-        .dtHorizontalExampleWrapper {
-            margin: 0 auto;
-            min-width: 600px;
-        }
-
-        #dtHorizontalExample th,
-        td {
-            white-space: nowrap;
-        }
-
-        table.dataTable thead .sorting:after,
-        table.dataTable thead .sorting:before,
-        table.dataTable thead .sorting_asc:after,
-        table.dataTable thead .sorting_asc:before,
-        table.dataTable thead .sorting_asc_disabled:after,
-        table.dataTable thead .sorting_asc_disabled:before,
-        table.dataTable thead .sorting_desc:after,
-        table.dataTable thead .sorting_desc:before,
-        table.dataTable thead .sorting_desc_disabled:after,
-        table.dataTable thead .sorting_desc_disabled:before {
-            bottom: .5em;
-        }
-    </style>
-
-
 </head>
 
 <body style="background-color: white;">
@@ -96,31 +70,31 @@
         </div>
     </header>
 
-          <div class="container">
-         <div class="row" style="height: 100px;">
+    <div class="container">
+        <div class="row" style="height: 100px;">
             <!--<div class="col-sm-3" style="background-image: url('images/logo.png');">-->
             <div class="col-sm-3" style="text-align: center;">
-               <button class="btn btn-outline-success btn-sm" style="margin: 10px;text-align: center;">
-                  <a href="Accueil.html">Accueil</a>
-               </button>
+                <button class="btn btn-outline-success btn-sm" style="margin: 10px;text-align: center;">
+                    <a href="Accueil.html">Accueil</a>
+                </button>
             </div>
             <div class="col-sm-3">
-               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               <a href="AdministrationBdd.html">Administration des tables</a>
-               </button>
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="AdministrationBdd.html">Administration des tables</a>
+                </button>
             </div>
             <div class="col-sm-3">
-               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               <a href="MessagePage.html">Modèles de messages</a>
-               </button>
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="MessagePage.html">Modèles de messages</a>
+                </button>
             </div>
-            <div class="col-sm-3" >
-               <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
-               <a href="SendMessage.html">Programmation</a>
-               </button>
+            <div class="col-sm-3">
+                <button class="btn btn-outline-primary btn-sm" style="margin: 10px;">
+                    <a href="SendMessage.html">Programmation</a>
+                </button>
             </div>
-         </div>
-      </div>
+        </div>
+    </div>
     <div class="container">
         <select class="browser-default custom-select notRemove" id="selectTable">
         </select>
@@ -139,8 +113,27 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-6 text-right">
-                <button type="button" class="btn btn-indigo card-footer ">Creer un tag</button>
+            <div class="text-right card-footer">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Nom du tag</span>
+                    </div>
+                    <input id="nom_tag" type="text" class="form-control" aria-label="Default"
+                        placeholder="Entrez le nom du tag" aria-describedby="inputGroup-sizing-default">
+                    <div class="input-group-append">
+                        <button class="btn btn-indigo" type="button" id="setTag">Creer un tag</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon04" id="pathcsv">
+                    <label class="custom-file-label" for="inputGroupFile04">Importez un fichier csv</label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-md btn-outline-mdb-color btn-indigo text-light m-0 px-3 py-2 z-depth-0 waves-effect" type="button" id="impoterCSV">Importer</button>
+                </div>
             </div>
         </div>
 
@@ -161,6 +154,8 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
+
+    <script type="text/javascript" src="js/main.js"></script>
 
     <script type="text/javascript" src="js/AdministrationBdd.js"></script>
 

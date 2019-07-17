@@ -1,10 +1,10 @@
-/*
+
 (function ($) {
     "use strict";
 
 
     /*==================================================================
-    [ Focus Contact2 ]
+    [ Focus Contact2 ]*/
     $('.input100').each(function(){
         $(this).on('blur', function(){
             if($(this).val().trim() != "") {
@@ -17,7 +17,7 @@
     })
   
     /*==================================================================
-    [ Validate ]
+    [ Validate ]*/
     var input = $('.validate-input .input100');
 
     $('.validate-form').on('submit',function(){
@@ -97,84 +97,213 @@
             console.log(error.responseText);
           });
     }
-        
-})(jQuery);
+    $.fn.ddTableFilter = function (options) {
 
-*/
+        try {
 
-(function ($) {
-/*================================================
- Connexion
-================================================*/
-$("#signup").click(function() {
-  $("#first").fadeOut("fast", function() {
-    $("#second").fadeIn("fast");
-  });
-});
-      
-$("#signin").click(function() {
-  $("#second").fadeOut("fast", function() {
-    $("#first").fadeIn("fast");
-  });
-});      
-        
-$(function() {
-  $("form[name='login']").validate({
-    rules: {
-                     
-      email: {
-        required: true,
-        email: true
-      },
-      password: {
-        required: true,     
-      }
-    },
-    messages: {
-      email: "Please enter a valid email address",              
-        password: {
-          required: "Please enter password",                      
-        }                   
-    },
-    submitHandler: function(form) {
-      form.submit();
+            options = $.extend(true, $.fn.ddTableFilter.defaultOptions, options);
+            return this.each(function () {
+                /*if ($(this).hasClass('ddtf-processed')) {
+                    refreshFilters(this);
+                    return;
+                }*/
+                var table = $(this);
+                var start = new Date();
+
+                $('th:visible', table).each(function (index) {
+                    if ($(this).hasClass('skip-filter')) return;
+                    var selectbox = $('<select>');
+                    var values = [];
+                    var opts = [];
+                    selectbox.append('<option value="--all--">' + $(this).text() + '</option>');
+
+                    var col = $('tr:not(.skip-filter) td:nth-child(' + (index + 1) + ')', table).each(function () {
+                        var cellVal = options.valueCallback.apply(this);
+                        if (cellVal.length == 0) {
+                            cellVal = '--empty--';
+                        }
+                        $(this).attr('ddtf-value', cellVal);
+
+                        if ($.inArray(cellVal, values) === -1) {
+                            var cellText = options.textCallback.apply(this);
+                            if (cellText.length == 0) { cellText = options.emptyText; }
+                            values.push(cellVal);
+                            opts.push({ val: cellVal, text: cellText });
+                        }
+                    });
+                    if (opts.length < options.minOptions) {
+                        return;
+                    }
+                    if (options.sortOpt) {
+                        opts.sort(options.sortOptCallback);
+                    }
+                    $.each(opts, function () {
+                        $(selectbox).append('<option value="' + this.val + '">' + this.text + '</option>')
+                    });
+
+
+                    $(this).wrapInner('<div style="display:none">');
+                    $(this).append(selectbox);
+                    $(selectbox).addClass('browser-default custom-select');
+                    selectbox.bind('change', { column: col }, function (event) {
+                        var changeStart = new Date();
+                        var value = $(this).val();
+
+                        event.data.column.each(function () {
+                            if ($(this).attr('ddtf-value') === value || value == '--all--') {
+                                $(this).removeClass('ddtf-filtered');
+                            }
+                            else {
+                                $(this).addClass('ddtf-filtered');
+                            }
+                        });
+                        var changeStop = new Date();
+                        if (options.debug) {
+                            console.log('Search: ' + (changeStop.getTime() - changeStart.getTime()) + 'ms');
+                        }
+                        refreshFilters(table);
+
+                    });
+                    table.addClass('ddtf-processed');
+                    if ($.isFunction(options.afterBuild)) {
+                        options.afterBuild.apply(table);
+                    }
+                });
+
+                function refreshFilters(table) {
+                    var refreshStart = new Date();
+                    $('tr', table).each(function () {
+                        var row = $(this);
+                        if ($('td.ddtf-filtered', row).length > 0) {
+                            options.transition.hide.apply(row, options.transition.options);
+                        }
+                        else {
+                            options.transition.show.apply(row, options.transition.options);
+                        }
+                    });
+
+                    if ($.isFunction(options.afterFilter)) {
+                        options.afterFilter.apply(table);
+                    }
+
+                    if (options.debug) {
+                        var refreshEnd = new Date();
+                        console.log('Refresh: ' + (refreshEnd.getTime() - refreshStart.getTime()) + 'ms');
+                    }
+                }
+
+                if (options.debug) {
+                    var stop = new Date();
+                    console.log('Build: ' + (stop.getTime() - start.getTime()) + 'ms');
+                }
+            });
+        } catch (error) { console.error(error); }
+    };
+
+    $.fn.ddTableFilter.defaultOptions = {
+        valueCallback: function () {
+            return encodeURIComponent($.trim($(this).text()));
+        },
+        textCallback: function () {
+            return $.trim($(this).text());
+        },
+        sortOptCallback: function (a, b) {
+            return a.text.toLowerCase() > b.text.toLowerCase();
+        },
+        afterFilter: null,
+        afterBuild: null,
+        transition: {
+            hide: $.fn.hide,
+            show: $.fn.show,
+            options: []
+        },
+        emptyText: '--Empty--',
+        sortOpt: true,
+        debug: false,
+        minOptions: 2
     }
-  });
-});
-                 
-$(function() {  
-  $("form[name='registration']").validate({
-    rules: {
-      firstname: "required",
-      lastname: "required",
-      email: {
-        required: true,
-        email: true
-      },
-      password: {
-        required: true,
-        minlength: 5
-      }
-    },
-          
-    messages: {
-      nom: "Entrez votre nom s'il vous plait",
-      prenom: "Entrez votre prénom s'il vous plait",
-      pseudo : "Entrez votre pseudo s'il vous plait",
-      fonction : "Entrez votre fonction s'il vous plait",
-      password1: {
-        required: "Veuillez fournir un mot de passe",
-        minlength: "Votre mot de passe doit contenir 5 caractères"
-      },
-      password2: {
-        required: "Veuillez écrire le même mot de passe"
-      },
-      email: "Entrez une adresse mail valide s'il vous plait"
-    },
+
+    //============= Connexion fonction =============
+
+    $("#signup").click(function() {
+        $("#first").fadeOut("fast", function() {
+          $("#second").fadeIn("fast");
+        });
+      });
+            
+      $("#signin").click(function() {
+        $("#second").fadeOut("fast", function() {
+          $("#first").fadeIn("fast");
+        });
+      });      
+              
+      $(function() {
+        $("form[name='login']").validate({
+          rules: {
+                           
+            email: {
+              required: true,
+              email: true
+            },
+            password: {
+              required: true,     
+            }
+          },
+          messages: {
+            email: "Please enter a valid email address",              
+              password: {
+                required: "Please enter password",                      
+              }                   
+          },
+          submitHandler: function(form) {
+            form.submit();
+          }
+        });
+      });
+                       
+      $(function() {  
+        $("form[name='registration']").validate({
+          rules: {
+            firstname: "required",
+            lastname: "required",
+            email: {
+              required: true,
+              email: true
+            },
+            password: {
+              required: true,
+              minlength: 5
+            }
+          },
+                
+          messages: {
+            nom: "Entrez votre nom s'il vous plait",
+            prenom: "Entrez votre prénom s'il vous plait",
+            pseudo : "Entrez votre pseudo s'il vous plait",
+            fonction : "Entrez votre fonction s'il vous plait",
+            password1: {
+              required: "Veuillez fournir un mot de passe",
+              minlength: "Votre mot de passe doit contenir 5 caractères"
+            },
+            password2: {
+              required: "Veuillez écrire le même mot de passe"
+            },
+            email: "Entrez une adresse mail valide s'il vous plait"
+          },
+              
+          submitHandler: function(form) {
+            form.submit();
+          }
+        });
+      });
         
+<<<<<<< HEAD
     submitHandler: function(form) {
       form.submit();
     }
   });
 });
 })
+=======
+})(jQuery);
+>>>>>>> master

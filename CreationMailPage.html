@@ -291,6 +291,7 @@
         type: 'subscribe',
         label: 'SpecialLink.Subscribe',
         link: 'http://[subscribe]/'
+<<<<<<< HEAD
     }];
 
     var mergeTags = [{
@@ -302,6 +303,30 @@
     }];
 
     var mergeContents = [{
+=======
+      }];
+      
+      var mergeTags = (function(){
+        console.log('test');
+        $.ajax({
+            url: 'http://localhost:8888/apifidelia/tests/public/balise.php/getall',
+            type: 'GET',
+            cache: false
+          }).done(function (response) {
+            let result = JSON.parse(response);
+            var lstBalise = new Array();
+            $.each(result.result, function(key, val){
+              lstBalise.push({name: val.Nom_balise, value: '{{'+val.Nom_balise+'}}'});
+            });
+            return lstBalise;
+          }).fail(error => {
+            console.log(error.responseText);
+          });
+      
+      });
+      
+      var mergeContents = [{
+>>>>>>> master
         name: 'content 1',
         value: '[content1]'
     }, {
@@ -319,8 +344,8 @@
     var beeConfig = {
         uid: 'test1-clientside',
         container: 'bee-plugin-container',
-        autosave: 15,
-        language: 'en-US',
+        autosave: 30,
+        language: 'fr-FR',
         trackChanges: true,
         specialLinks: specialLinks,
         mergeTags: mergeTags,
@@ -420,15 +445,24 @@
         };
 
         reader.readAsText(templateFile);
+<<<<<<< HEAD
     };
 
     document.getElementById('choose-template').addEventListener('change', loadTemplate, false);
 
     request(
+=======
+      };
+      
+      document.getElementById('choose-template').addEventListener('change', loadTemplate, false);
+      
+      /*request(
+>>>>>>> master
         'POST',
         'https://auth.getbee.io/apiauth',
         'grant_type=password&client_id=08be1dd5-13ac-4744-8b55-f3748fdd7406&client_secret=KSNip7ZOqbCzkxOnLaHOmQWWxf6xr8LuDRGFFcfkX0gmzsIAaDi0',
         'application/x-www-form-urlencoded',
+<<<<<<< HEAD
         function(token) {
             BeePlugin.create(token, beeConfig, function(beePluginInstance) {
                 bee = beePluginInstance;
@@ -442,6 +476,21 @@
                     });
             });
         });
+=======
+        function (token) {
+          BeePlugin.create(token, beeConfig, function (beePluginInstance) {
+            bee = beePluginInstance;
+            request(
+              'GET',
+              'https://rsrc.getbee.io/api/templates/m-bee',
+              null,
+              null,
+              function (template) {
+                bee.start(template);
+              });
+          });
+        });*/
+>>>>>>> master
 
     var allTagsHTML = '';
     var allTagsforBDD = new Array();
