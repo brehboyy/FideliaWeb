@@ -72,9 +72,8 @@
             $.each(result.result, function (key, val) {
                 lstBalise.push({ name: val.Nom_balise, value: '{{' + val.Nom_balise + '}}' });
             });
-            callback = lstBalise;
         }).fail(error => {
-            console.log(error.responseText);
+            console.log(error);
         });
         return lstBalise;
     }();
@@ -151,7 +150,8 @@
                 'Corps': htmlFile,
                 'Object': $('#object').val(),
                 'Type': 'Mail',
-                'Categorie': 'Cat1'
+                'Categorie': $('#categorie').val(),
+                'Template' : jsonFile
             };
 
             $.ajax({
@@ -168,7 +168,6 @@
             }).fail(error => {
                 console.log(error.responseText);
             });
-            //save('newsletter.html', htmlFile);
         },
         onSaveAsTemplate: function (jsonFile) { // + thumbnail? 
             save('newsletter-template.json', jsonFile);
