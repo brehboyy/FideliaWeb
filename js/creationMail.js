@@ -166,7 +166,8 @@
                     'message': JSON.stringify(messageObject)
                 },
                 cache: false
-            }).done(function(response) {
+            }).done(function (response) {
+                console.log(response);
                 let result = JSON.parse(response);
                 alert(result.message);
             }).fail(error => {
