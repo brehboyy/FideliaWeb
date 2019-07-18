@@ -16,10 +16,17 @@
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Type_Modele_Message + '</td>';
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Categorie_Modele_Message + '</td>';
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Date_Modele_Message + '</td>';
+                output += '<td class="pt-3-half" contenteditable="false" width="150px">'                        
+                output += '<select class="browser-default custom-select test" id="statut">'
+                output += '<option name="teste" value="EN COURS"  '+( val.Statut_Message == "EN COURS" ? 'selected' : '')+'>EN COURS</option>';
+                output += '<option value="ARCHIVE" '+( val.Statut_Message == "ARCHIVE" ? 'selected' : '')+'>ARCHIVE</option>';
+                output += '<option value="EN ATTENTE" '+( val.Statut_Message == "EN ATTENTE" ? 'selected' : '')+'>EN ATTENTE</option>';
+                output += '</select></td>';
                 output += '<td> <span class="table-remove"><button onclick="deleteRow('+ val.ID_Modele_Message+ ')" type="button" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
                 output += '<td> <span class="table-remove"><a href="CreationMailPage.html?ID_Modele_Message='+val.ID_Modele_Message+'" type="button" class="indigo-text"><i class="fas fa-edit" aria-hidden="true"></i></a></span></td>';
                 output += '<td> <span class="table-remove"><button type="button" class="green-text program" data-toggle="modal" data-target="#basicExampleModal" value="'+val.ID_Modele_Message+'"><i class="fas fa-paper-plane" aria-hidden="true"></i></button></span></td>';
                 output += '</tr>';
+
             });
             $('tbody').html(output);
 
@@ -28,6 +35,8 @@
         }).fail(error => {
             console.log(error.responseText);
         });
+
+
     };
 
     $(document).ready(gettabmsg);
@@ -35,9 +44,35 @@
 
 })(jQuery);
 
+      $(document).on('change', '#statut', function() {  
+           Statut_Message =$(this).val();  
+           console.log(Statut_Message);
+                           $.ajax({
+                    url: baseUrl + 'message.php/updateMessage',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'message': JSON.stringify(messageObject)
+                    },
+                    cache: false
+                }).done(function(response) {
+
+                    console.log(response);
+                       let resultat;
+                        try {
+                            resultat = JSON.parse(response);
+                        } catch (error) {
+                            resultat = response;
+                        }
+                }).fail(error => {
+                    console.log(error.responseText);
+                });
+        });
+
     var ID_Modele_Message;
     $("tbody").on('click', '.program', function() {  
-           ID_Modele_Message =$(this).val();  
+           ID_Modele_Message =$(this).val();
+           console.log(ID_Modele_Message);
         });
           var result = 'Permanent';
       $(document).ready(function(){
@@ -143,10 +178,17 @@ function deleteRow(id_row) {
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Type_Modele_Message + '</td>';
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Categorie_Modele_Message + '</td>';
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Date_Modele_Message + '</td>';
+                output += '<td class="pt-3-half" contenteditable="false" width="150px">'                        
+                output += '<select class="browser-default custom-select" id="statut'+val.ID_Modele_Message+'">'
+                output += '<option value="EN COURS"  '+( val.Statut_Message == "EN COURS" ? 'selected' : '')+'>EN COUR</option>';
+                output += '<option value="ARCHIVE" '+( val.Statut_Message == "ARCHIVE" ? 'selected' : '')+'>ARCHIVE</option>';
+                output += '<option value="EN ATTENTE" '+( val.Statut_Message == "EN ATTENTE" ? 'selected' : '')+'>EN ATTENTE</option>';
+                output += '</select></td>';
                 output += '<td> <span class="table-remove"><button onclick="deleteRow('+ val.ID_Modele_Message+ ')" type="button" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
                 output += '<td> <span class="table-remove"><a href="CreationMailPage.html?ID_Modele_Message='+val.ID_Modele_Message+'" type="button" class="indigo-text"><i class="fas fa-edit" aria-hidden="true"></i></a></span></td>';
                 output += '<td> <span class="table-remove"><button type="button" class="green-text program" data-toggle="modal" data-target="#basicExampleModal" value="'+val.ID_Modele_Message+'"><i class="fas fa-paper-plane" aria-hidden="true"></i></button></span></td>';
                 output += '</tr>';
+
                 });
                 $('tbody').html(output);
     
