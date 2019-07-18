@@ -149,7 +149,27 @@
             console.log('response', response);
         },
         onSave: function(jsonFile, htmlFile) {
+                var getUrlParameter = function getUrlParameter(sParam) {
+                    var sPageURL = window.location.search.substring(1),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                        }
+                    }
+                };
+
+            var ID_Modele_Message = getUrlParameter('ID_Modele_Message');
+            if (typeof ID_Modele_Message === "undefined") {
+                ID_Modele_Message = 0;
+            }
             let messageObject = {
+                'Id': ID_Modele_Message,
                 'Titre': $('#titre').val(),
                 'Corps': htmlFile,
                 'Object': $('#object').val(),
@@ -158,20 +178,59 @@
                 'Template': jsonFile
             };
 
-            $.ajax({
-                url: baseUrl + 'message.php/insertMessage',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    'message': JSON.stringify(messageObject)
-                },
-                cache: false
-            }).done(function(response) {
-                let result = JSON.parse(response);
-                alert(result.message);
-            }).fail(error => {
-                console.log(error.responseText);
-            });
+                var result;
+                var exist = false;
+                    $.ajax({
+                        url: baseUrl + 'message.php/existById/' + ID_Modele_Message,
+                        type: 'GET'
+                    }).done(function(response) {
+                        result = (JSON.parse(response)).result;
+                        console.log(result);
+            if (result == false) {
+                $.ajax({
+                    url: baseUrl + 'message.php/insertMessage',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'message': JSON.stringify(messageObject)
+                    },
+                    cache: false
+                }).done(function(response) {
+                       let resultat;
+                        try {
+                            resultat = JSON.parse(response);
+                        } catch (error) {
+                            resultat = response;
+                        }
+                }).fail(error => {
+                    console.log(error.responseText);
+                });
+            }
+            else{
+                $.ajax({
+                    url: baseUrl + 'message.php/updateMessage',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'message': JSON.stringify(messageObject)
+                    },
+                    cache: false
+                }).done(function(response) {
+                       let resultat;
+                        try {
+                            resultat = JSON.parse(response);
+                        } catch (error) {
+                            resultat = response;
+                        }
+                }).fail(error => {
+                    console.log(error.responseText);
+                });
+            }
+                    }).fail(error => {
+                        console.log(error);
+                    });
+               
+
         },
         onSaveAsTemplate: function(jsonFile) { // + thumbnail? 
             save('newsletter-template.json', jsonFile);
@@ -243,13 +302,10 @@
                         } catch (error) {
                             result = response;
                         }
-                        console.log(result);
-                        console.log(result.result[0].ID_Modele_Message);
                         $("#titre").val(result.result[0].Titre_Modele_Message);
                         $("#object").val(result.result[0].Objet_Modele_Message);
                         //$("div.typeclient select").val(result.result[0].Objet_Modele_Message);
                         $("div.typeEvenement select").val(result.result[0].Categorie_Modele_Message);
-                        console.log(result.result[0].Template_Modele_Message);
                         bee.start(JSON.parse(result.result[0].Template_Modele_Message));
                     }).fail(error => {
                         console.log(error);
@@ -266,13 +322,10 @@
                         } catch (error) {
                             result = response;
                         }
-                        console.log(result);
-                        console.log(result.result[0].ID_Modele_Message);
                         $("#titre").val(result.result[0].Titre_Modele_Message);
                         $("#object").val(result.result[0].Objet_Modele_Message);
                         //$("div.typeclient select").val(result.result[0].Objet_Modele_Message);
                         $("div.typeEvenement select").val(result.result[0].Categorie_Modele_Message);
-                        console.log(result.result[0].Template_Modele_Message);
                         bee.start(JSON.parse(result.result[0].Template_Modele_Message));
                     }).fail(error => {
                         console.log(error);
