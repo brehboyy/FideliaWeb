@@ -198,6 +198,7 @@
                     },
                     cache: false
                 }).done(function(response) {
+                    console.log(response);
                     alert(response.message);
                 }).fail(error => {
                     console.log(error.responseText);
@@ -213,6 +214,8 @@
                     },
                     cache: false
                 }).done(function(response) {
+
+                    console.log(response);
                        let resultat;
                         try {
                             resultat = JSON.parse(response);
