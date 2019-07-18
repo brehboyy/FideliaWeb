@@ -114,7 +114,7 @@
             listId.push(val.firstChild.innerText);
         });
         $.ajax({
-            url: baseUrl + 'tag.php/insert',
+            url: baseUrl + 'tag.php/insertClient',
             type: 'POST',
             data: { 'listId': JSON.stringify(listId), 'nom_tag': JSON.stringify($('#nom_tag').val()) },
             cache: false
