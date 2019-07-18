@@ -124,7 +124,7 @@
       </div>
       <div class="modal-body">
         <div class="container">
-         <form class="border border-light p-5" id="sauvegarder">
+         <form class="border border-light p-5" id="sauvegarder" >
           <div id="IDModeleMessage"></div>
             <div class="permanent">
               <label>Choisir la fréquence d'envoi :</label>
@@ -143,24 +143,24 @@
               <br>
                <div>
                   <label>A partir de :</label>
-                  <div>
+                  <div class="validate-input" data-validate="La date doit être renseignée">
                      <label>Choisir la date :</label>
-                     <input type="datetime-local" id="dateDebut">
+                     <input class="inputfrequence" type="datetime-local" id="dateDebut">
                   </div>
                </div>
 
-               <div>
+               <div class="validate-input" data-validate="Format email invalide : ex@abc.xyz">
                   <label>Selon la condition :</label>
-                  <select class="browser-default custom-select mb-4" id="selectCondition">
+                  <select class="browser-default custom-select mb-4 inputfrequence" id="selectCondition">
                      <option value="" disabled="" selected="">Condition</option>
                      <option value="1">Produit de la dernière commande</option>
                      <option value="2">Date de la dernière commande</option>
                      <option value="3">Date d'anniversaire du nourrisson</option>
                   </select>
                </div>
-               <div>
+               <div class="validate-input" data-validate="La fréquence doit être renseigné">
                   <label>Fréquence (jours)</label>
-                  <input type="number" name="numberFrequence" id="numberFrequence" style="border-style: solid;">
+                  <input class="inputfrequence" type="number" name="numberFrequence" id="numberFrequence" style="border-style: solid;">
                </div>
             </div>
             <div id="occasionnellement">
@@ -175,6 +175,9 @@
             <!--Save-->
             <div class="text-center mb-3">
                <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Sauvegarder</button>
+            </div>
+            <div class="text-center mb-3">
+               <button id="sendNow" type="button" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Envoi immédiat</button>
             </div>
          </form>
       </div>

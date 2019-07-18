@@ -43,11 +43,13 @@
     //=========================END Dropdown filter table ==========================
 
 })(jQuery);
-    function showValidate(input) {
-        var thisAlert = $(input).parent();
+  
+    $('.inputfrequence').each(function(){
+        $(this).focus(function(){
+           hideValidate(this);
+        });
+    });
 
-        $(thisAlert).addClass('alert-validate');
-    }
     function validate (input) {
         if(input.localName == 'input'){
             if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
@@ -64,8 +66,20 @@
                 }
             }
         }
+        
     }
 
+    function showValidate(input) {
+        var thisAlert = $(input).parent();
+
+        $(thisAlert).addClass('alert-validate');
+    }
+
+    function hideValidate(input) {
+        var thisAlert = $(input).parent();
+
+        $(thisAlert).removeClass('alert-validate');
+    }
       $(document).on('change', '#statut', function() {  
            Message =$(this).val();  
            console.log(Message);
@@ -134,10 +148,28 @@
           console.log('Date début permanent (dateDebut) : ' + dateDebut);
 
       });
-      
+      $('#sendNow').click(function(){
+        console.log(ID_Modele_Message);
+
+        $.ajax({
+        url: baseUrl + 'message.php/envoyer',
+        type: 'POST',
+        data: { 'Id': ID_Modele_Message },
+         cache: false
+    }).done(function(response) {
+                    console.log(response);
+                       let resultat;
+                        try {
+                            resultat = JSON.parse(response);
+                        } catch (error) {
+                            resultat = response;
+                        }
+                }).fail(error => {
+                    console.log(error.responseText);
+                });
+        });
       $('#sauvegarder').submit(function(){
         let inputIns = $('#sauvegarder :input');
-          alert(inputIns);
         var check = true;
         for(var i=0; i<inputIns.length; i++) {
             if(validate(inputIns[i]) == false){
@@ -238,5 +270,5 @@ function deleteRow(id_row) {
     }).fail(error => {
         console.log(error);
     });
-      
+
 }
