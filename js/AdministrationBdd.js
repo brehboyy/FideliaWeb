@@ -44,7 +44,9 @@
                 $.each(result.result.columns, function (key, val) { //Titre	Objet	Type	Catégorie	Date
                     output += '<th class="text-center">' + val.COLUMN_NAME + '</th>';
                 });
+                output += '<th class="text-center">Editer</th>';
                 output += '<th class="text-center">Supprimer</th>';
+                output += '<th class="text-center">Sauvegarder</th>';
                 output += "</tr>";
                 $('thead').html(output);
                 let output2 = "";
@@ -54,12 +56,19 @@
                     let compt = 0;
                     for (var property in val) {
                         if (val.hasOwnProperty(property)) {
-                            if (compt == 0) ID_champs = property;
-                            output2 += '<td class="pt-3-half" contenteditable="false">' + val[property] + '</td>';
+                            if (compt == 0){
+                                ID_champs = property;
+                                output2 += '<td class="pt-3-half" contenteditable="false">' + val[property] + '</td>';
+                            }
+                            else{
+                                output2 += '<td class="pt-3-half" contenteditable="false" value="'+ property +'" id="row'+val[ID_champs] + property + '">' + val[property] + '</td>'; 
+                            }
                             compt++;
                         }
                     }
+                    output2 += '<td><span class="table-remove"><button type="button" onclick="editRow(' + val[ID_champs] + ')" class="btn btn-secondary btn-rounded btn-sm my-0">Editer</button></span></td>';
                     output2 += '<td><span class="table-remove"><button type="button" onclick="deleteRow(\'' + ID_champs + '\',' + val[ID_champs] + ')" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
+                    output2 += '<td><span class="table-remove"><button type="button" onclick="saveRow(' + val[ID_champs] + ')" class="btn btn-success btn-rounded btn-sm my-0">Sauvegarder</button></span></td>';
                     output2 += '</tr>';
                 });
                 $('tbody').html(output2);
@@ -142,4 +151,44 @@ function deleteRow(nom_champs, id_row) {
     }).fail(error => {
         console.log(error);
     });
+}
+
+function editRow(id_row) {
+
+    $('#row'+id_row+'[contenteditable="false"]').attr('contenteditable', true);
+
+}
+
+function saveRow(id_row) {
+
+    let listAttributs = [];
+    let listValeurs = [];
+    $('[id^="row'+id_row+'"').each(function() {
+        var res = ($(this)[0].id).split(id_row);
+        console.log(res[1]);
+        console.log($(this)[0].innerText);
+
+            listAttributs.push(res[1]);
+            listValeurs.push($(this)[0].innerText);
+    });
+        console.log(listAttributs);
+        console.log(listValeurs);
+        console.log($('#selectTable').val());
+
+        $.ajax({
+            url: baseUrl + 'systeme.php/updateTable',
+            type: 'POST',
+            data: { 
+                'table': JSON.stringify($('#selectTable').val()),
+                'listAttributs': JSON.stringify(listAttributs),
+                'listValeurs': JSON.stringify(listValeurs)},
+            cache: false
+        }).done(function (response) {
+
+            console.log(response);
+
+        }).fail(error => {
+            console.log(error);
+        });
+
 }

@@ -291,6 +291,7 @@
 
                 var ID_Modele_Message = getUrlParameter('ID_Modele_Message');
                 if (ID_Modele_Message != null) {
+                    console.log(ID_Modele_Message)
                     $.ajax({
                         url: baseUrl + 'message.php/GetById/' + ID_Modele_Message,
                         type: 'GET'
