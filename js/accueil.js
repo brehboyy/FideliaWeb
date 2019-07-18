@@ -16,9 +16,9 @@
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Type_Modele_Message + '</td>';
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Categorie_Modele_Message + '</td>';
                 output += '<td class="pt-3-half" contenteditable="false">' + val.Date_Modele_Message + '</td>';
-                output += '<td> <span class="table-remove"><button onclick="deleteRow('+ val.ID_Modele_Message+ ')"  type="button" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
+                output += '<td> <span class="table-remove"><button onclick="deleteRow('+ val.ID_Modele_Message+ ')" type="button" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
                 output += '<td> <span class="table-remove"><a href="CreationMailPage.html?ID_Modele_Message='+val.ID_Modele_Message+'" type="button" class="indigo-text"><i class="fas fa-edit" aria-hidden="true"></i></a></span></td>';
-                output += '<td> <span class="table-remove"><button type="button" class="green-text" data-toggle="modal" data-target="#basicExampleModal"><i class="fas fa-paper-plane" aria-hidden="true"></i></button></span></td>';
+                output += '<td> <span class="table-remove"><button onclick="deleteRow('+ val.ID_Modele_Message+ ')" type="button" class="green-text" data-toggle="modal" data-target="#basicExampleModal" ><i class="fas fa-paper-plane" aria-hidden="true"></i></button></span></td>';
                 output += '</tr>';
             });
             $('tbody').html(output);
