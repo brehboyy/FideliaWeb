@@ -178,7 +178,7 @@
             }
         }
           var selectCondition = $( "#selectCondition option:selected" ).text();
-          if (selectCondition = 'Condition') {selectCondition = 'Aucune condition'}
+          if (selectCondition == 'Condition') {selectCondition = 'Aucune condition'}
           var numberFrequence = $('#numberFrequence').val();
           var dateEnvoi;
             switch(result){
@@ -206,7 +206,7 @@
               'Condition': selectCondition };
         
             $.ajax({
-              url: 'http://localhost/apifidelia/tests/public/message.php/insertProgrammation',
+              url: baseUrl + 'message.php/insertProgrammation',
               type: 'POST',
               dataType: 'json',
               data: { 'programmation': JSON.stringify(programmationObject) },
