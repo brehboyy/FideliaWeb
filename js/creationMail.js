@@ -198,6 +198,7 @@
                 console.log(result);
                 if (result == false) {
                     $.ajax({
+<<<<<<< Updated upstream
                         url: baseUrl + 'message.php/insertMessage',
                         type: 'POST',
                         dataType: 'json',
@@ -225,6 +226,42 @@
 
                         console.log(response);
                         let resultat;
+=======
+                        url: baseUrl + 'message.php/existById/' + ID_Modele_Message,
+                        type: 'GET'
+                    }).done(function(response) {
+                        result = (JSON.parse(response)).result;
+                        console.log(result);
+            if (result == false) {
+                $.ajax({
+                    url: baseUrl + 'message.php/insertMessage',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'message': JSON.stringify(messageObject)
+                    },
+                    cache: false
+                }).done(function(response) {
+                    console.log(response.result);
+                    window.location = "CreationMailPage.html?ID_Modele_Message=" +response.result;
+                }).fail(error => {
+                    console.log(error.responseText);
+                });
+            }
+            else{
+                $.ajax({
+                    url: baseUrl + 'message.php/updateMessage',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'message': JSON.stringify(messageObject)
+                    },
+                    cache: false
+                }).done(function(response) {
+
+                    console.log(response);
+                       let resultat;
+>>>>>>> Stashed changes
                         try {
                             resultat = JSON.parse(response);
                         } catch (error) {
@@ -312,7 +349,6 @@
                         }
                         $("#titre").val(result.result[0].Titre_Modele_Message);
                         $("#object").val(result.result[0].Objet_Modele_Message);
-                        //$("div.typeclient select").val(result.result[0].Objet_Modele_Message);
                         $("div.typeEvenement select").val(result.result[0].Categorie_Modele_Message);
                         bee.start(JSON.parse(result.result[0].Template_Modele_Message));
                     }).fail(error => {
