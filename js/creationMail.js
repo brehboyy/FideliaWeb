@@ -1,10 +1,12 @@
-(function($) {
+(function ($) {
+    var ID_Modele_Message = 0;
+    var listPieceJointe = new Array();
     var allTagsforBDD = new Array();
     $.ajax({
         url: baseUrl + 'tag.php/getall',
         type: 'GET',
         cache: false
-    }).done(function(response) {
+    }).done(function (response) {
         let result;
         try {
             result = JSON.parse(response);
@@ -13,17 +15,20 @@
         }
         let output = "";
         output += '<option selected value="-1">Selectionner table</option>';
-        $.each(result.result, function(key, val) { //Titre    Objet    Type    Catégorie    Date
+        $.each(result.result, function (key, val) { //Titre    Objet    Type    Catégorie    Date
             output += '<option value="' + val.Nom_Tag + '">' + val.Nom_Tag + '</option>';
         });
+
+
+
         $('#TagToAdd').html(output);
     }).fail(error => {
         console.log(error);
     });
 
-    var request = function(method, url, data, type, callback) {
+    var request = function (method, url, data, type, callback) {
         var req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
+        req.onreadystatechange = function () {
             if (req.readyState === 4 && req.status === 200) {
                 var response = JSON.parse(req.responseText);
                 callback(response);
@@ -48,7 +53,7 @@
         req.send(data);
     };
 
-    var save = function(filename, content) {
+    var save = function (filename, content) {
         saveAs(
             new Blob([content], {
                 type: 'text/plain;charset=utf-8'
@@ -67,15 +72,15 @@
         link: 'http://[subscribe]/'
     }];
 
-    let mergeTags = function() {
+    let mergeTags = function () {
         var lstBalise = [];
         $.ajax({
             url: baseUrl + 'balise.php/getall',
             type: 'GET',
             cache: false
-        }).done(function(response) {
+        }).done(function (response) {
             let result = JSON.parse(response);
-            $.each(result.result, function(key, val) {
+            $.each(result.result, function (key, val) {
                 lstBalise.push({
                     name: val.Nom_balise,
                     value: '{{' + val.Nom_balise + '}}'
@@ -145,29 +150,29 @@
                 })
             },
         },
-        onChange: function(jsonFile, response) {
+        onChange: function (jsonFile, response) {
             console.log('json', jsonFile);
             console.log('response', response);
         },
-        onSave: function(jsonFile, htmlFile) {
-                var getUrlParameter = function getUrlParameter(sParam) {
-                    var sPageURL = window.location.search.substring(1),
-                        sURLVariables = sPageURL.split('&'),
-                        sParameterName,
-                        i;
+        onSave: function (jsonFile, htmlFile) {
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = window.location.search.substring(1),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
 
-                    for (i = 0; i < sURLVariables.length; i++) {
-                        sParameterName = sURLVariables[i].split('=');
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
 
-                        if (sParameterName[0] === sParam) {
-                            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-                        }
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                     }
-                };
+                }
+            };
 
-            var ID_Modele_Message = getUrlParameter('ID_Modele_Message');
-            if (typeof ID_Modele_Message === "undefined") {
-                ID_Modele_Message = 0;
+
+            if (ID_Modele_Message === 0) {
+                ID_Modele_Message = getUrlParameter('ID_Modele_Message');
             }
             let messageObject = {
                 'Id': ID_Modele_Message,
@@ -180,80 +185,129 @@
                 'ListTag': allTagsforBDD
             };
 
-                var result;
-                var exist = false;
+            var result;
+            var exist = false;
+            $.ajax({
+                url: baseUrl + 'message.php/existById/' + ID_Modele_Message,
+                type: 'GET'
+            }).done(function (response) {
+                result = (JSON.parse(response)).result;
+                console.log(result);
+                if (result == false) {
                     $.ajax({
-                        url: baseUrl + 'message.php/existById/' + ID_Modele_Message,
-                        type: 'GET'
-                    }).done(function(response) {
-                        result = (JSON.parse(response)).result;
-                        console.log(result);
-            if (result == false) {
-                $.ajax({
-                    url: baseUrl + 'message.php/insertMessage',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        'message': JSON.stringify(messageObject)
-                    },
-                    cache: false
-                }).done(function(response) {
-                    console.log(response.result);
-                    window.location = "CreationMailPage.html?ID_Modele_Message=" +response.result;
-                }).fail(error => {
-                    console.log(error.responseText);
-                });
-            }
-            else{
-                $.ajax({
-                    url: baseUrl + 'message.php/updateMessage',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        'message': JSON.stringify(messageObject)
-                    },
-                    cache: false
-                }).done(function(response) {
+                        url: baseUrl + 'message.php/insertMessage',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            'message': JSON.stringify(messageObject)
+                        },
+                        cache: false
+                    }).done(function (response) {
+                        console.log(response.result);
+                        ID_Modele_Message = response.result;
+                        var file = new FormData();
+                        $.each(listPieceJointe, function (key, value) {
+                            file.append('fileToUpload[]', value, value.name + '_' + ID_Modele_Message);
+                        });
 
-                    console.log(response);
-                       let resultat;
+
+                        $.ajax({
+                            url: baseUrl + 'message.php/insertPiecesjointes',
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            dataType: 'json',
+                            data: file,
+                            cache: false
+                        }).done(function (response) {
+                            console.log(response);
+
+                            //window.location = "CreationMailPage.html?ID_Modele_Message=" + response.result;
+                        }).fail(error => {
+                            console.log(error.responseText);
+                        });
+                        //window.location = "CreationMailPage.html?ID_Modele_Message=" + response.result;
+
+                    }).fail(error => {
+                        console.log(error.responseText);
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: baseUrl + 'message.php/updateMessage',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            'message': JSON.stringify(messageObject)
+                        },
+                        cache: false
+                    }).done(function (response) {
+
+                        console.log(response);
+
+                        let resultat;
                         try {
                             resultat = JSON.parse(response);
                         } catch (error) {
                             resultat = response;
                         }
-                }).fail(error => {
-                    console.log(error.responseText);
-                });
-            }
+                        if (listPieceJointe.length > 0) {
+                            var file = new FormData();
+                            $.each(listPieceJointe, function (key, value) {
+                                file.append('fileToUpload[]', value, value.name + '_' + ID_Modele_Message);
+                            });
+
+
+                            $.ajax({
+                                url: baseUrl + 'message.php/insertPiecesjointes',
+                                type: 'POST',
+                                contentType: false,
+                                processData: false,
+                                dataType: 'json',
+                                data: file,
+                                cache: false
+                            }).done(function (response) {
+                                console.log(response);
+
+                                //window.location = "CreationMailPage.html?ID_Modele_Message=" + response.result;
+                            }).fail(error => {
+                                console.log(error.responseText);
+                            });
+                        }
                     }).fail(error => {
-                        console.log(error);
+                        console.log(error.responseText);
                     });
-               
+                }
+
+
+            }).fail(error => {
+                console.log(error);
+            });
+
 
         },
-        onSaveAsTemplate: function(jsonFile) { // + thumbnail? 
+        onSaveAsTemplate: function (jsonFile) { // + thumbnail? 
             save('newsletter-template.json', jsonFile);
         },
-        onAutoSave: function(jsonFile) { // + thumbnail? 
+        onAutoSave: function (jsonFile) { // + thumbnail? 
             console.log(new Date().toISOString() + ' autosaving...');
             window.localStorage.setItem('newsletter.autosave', jsonFile);
         },
-        onSend: function(htmlFile) {
+        onSend: function (htmlFile) {
             //write your send test function here
         },
-        onError: function(errorMessage) {
+        onError: function (errorMessage) {
             console.log('onError ', errorMessage);
         }
     };
 
     var bee = null;
 
-    var loadTemplate = function(e) {
+    var loadTemplate = function (e) {
         var templateFile = e.target.files[0];
         var reader = new FileReader();
 
-        reader.onload = function() {
+        reader.onload = function () {
             var templateString = reader.result;
             var template = JSON.parse(templateString);
             bee.load(template);
@@ -262,6 +316,8 @@
         reader.readAsText(templateFile);
     };
 
+
+
     document.getElementById('choose-template').addEventListener('change', loadTemplate, false);
 
     request(
@@ -269,9 +325,9 @@
         'https://auth.getbee.io/apiauth',
         'grant_type=password&client_id=08be1dd5-13ac-4744-8b55-f3748fdd7406&client_secret=KSNip7ZOqbCzkxOnLaHOmQWWxf6xr8LuDRGFFcfkX0gmzsIAaDi0',
         'application/x-www-form-urlencoded',
-        function(token) {
+        function (token) {
 
-            BeePlugin.create(token, beeConfig, function(beePluginInstance) {
+            BeePlugin.create(token, beeConfig, function (beePluginInstance) {
                 bee = beePluginInstance;
 
                 var getUrlParameter = function getUrlParameter(sParam) {
@@ -290,12 +346,12 @@
                 };
 
                 var ID_Modele_Message = getUrlParameter('ID_Modele_Message');
-                if (ID_Modele_Message != null) {
+                if (ID_Modele_Message != null && ID_Modele_Message > 0) {
                     console.log(ID_Modele_Message)
                     $.ajax({
                         url: baseUrl + 'message.php/GetById/' + ID_Modele_Message,
                         type: 'GET'
-                    }).done(function(response) {
+                    }).done(function (response) {
                         let result;
                         try {
 
@@ -312,9 +368,9 @@
                     });
                 } else {
                     $.ajax({
-                        url: baseUrl + 'message.php/GetById/' + 3,
+                        url: baseUrl + 'message.php/GetById/' + 9,
                         type: 'GET'
-                    }).done(function(response) {
+                    }).done(function (response) {
                         let result;
                         try {
 
@@ -331,9 +387,28 @@
                         console.log(error);
                     });
                 }
+                $.ajax({
+                    url: baseUrl + 'tag.php/GetByIdMessage/' + ID_Modele_Message,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (response) {
+                    var allTagsHTML = '';
+
+                    $.each(response.result, function (index, value) {
+                        allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" value="' + value.Nom_Tag + '">' + value.Nom_Tag  + ' <i class="fas fa-times" ></i> </button>';
+                        allTagsforBDD.push(value.Nom_Tag);
+                    });
+                    $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
+
+                    $("#exampleModalLabel").html('Tag ajouté avec succès');
+
+                }).fail(error => {
+                    console.log(error);
+                });
+
             });
         });
-    $("#addTags").click(function() {
+    $("#addTags").click(function () {
 
         var allTagsHTML = '';
         var singleValues = $("#TagToAdd").val();
@@ -341,7 +416,7 @@
             allTagsforBDD.push(singleValues);
             // foreach
             // add to allTagsHTML
-            $.each(allTagsforBDD, function(index, value) {
+            $.each(allTagsforBDD, function (index, value) {
                 allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
 
             });
@@ -352,19 +427,58 @@
             $("#exampleModalLabel").html('Ce tag a déjà été ajouté !');
         }
     });
-    $("#alltags").on('click', 'button', function() {
+    $("#alltags").on('click', 'button', function () {
         var allTagsHTML = '';
         var tag = $(this).val();
-        allTagsforBDD = jQuery.grep(allTagsforBDD, function(value) {
+        allTagsforBDD = jQuery.grep(allTagsforBDD, function (value) {
             return value != tag;
         });
         // foreach
         // add to allTagsHTML
-        $.each(allTagsforBDD, function(index, value) {
+        $.each(allTagsforBDD, function (index, value) {
             allTagsHTML = allTagsHTML + '<button class="btn btn-outline-primary btn-sm test" id="delTags' + value + ' " value="' + value + '">' + value + ' <i class="fas fa-times" ></i> </button>';
 
         });
         $("#alltags").html("<b>Tags:</b> <br>" + allTagsHTML);
     });
 
+
+    $("#selectPieceJointe").change(function () {
+
+        var allPieceJointe = '';
+        var file_data = $(this).prop('files')[0];
+        if (jQuery.inArray(file_data, listPieceJointe) == "-1") {
+            listPieceJointe.push(file_data);
+            // foreach
+            // add to allTagsHTML
+            $.each(listPieceJointe, function (index, value) {
+                allPieceJointe = allPieceJointe + '<button class="btn btn-outline-primary btn-sm test" id="delPJ' + value.name + ' " value="' + value.name + '">' + value.name + ' <i class="fas fa-times" ></i> </button>';
+
+            });
+            $("#allPieceJointe").html("<b>Piece jointe:</b> <br>" + allPieceJointe);
+        } else {
+            $("#exampleModalLabel").html('Ce tag a déjà été ajouté !');
+        }
+        $(this).val('');
+    });
+    $("#allPieceJointe").on('click', 'button', function () {
+        var allPieceJointe = '';
+        var pj = $(this).val();
+        listPieceJointe = jQuery.grep(listPieceJointe, function (value) {
+            return value.name != pj;
+        });
+        // foreach
+        // add to allTagsHTML
+        $.each(listPieceJointe, function (index, value) {
+            allPieceJointe = allPieceJointe + '<button class="btn btn-outline-primary btn-sm test" id="delPJ' + value.name + ' " value="' + value.name + '">' + value.name + ' <i class="fas fa-times" ></i> </button>';
+
+        });
+        $("#allPieceJointe").html("<b>Piece jointe:</b> <br>" + allPieceJointe);
+    });
+
+    /*$('#selectPieceJointe').change(function(){
+        console.log($(this).prop('files')[0]);
+        //var file_data = $(this).prop('files')[0];
+        //listPieceJointe.append('file', file_data);
+    });*/
 })(jQuery);

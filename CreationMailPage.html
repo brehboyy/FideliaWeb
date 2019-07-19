@@ -37,6 +37,7 @@
     <!-- Your custom styles (optional) -->
     <link href="css/style.css" rel="stylesheet">
 </head>
+
 <body style="background-color: white; overflow: scroll;">
     <header>
         <div class="container">
@@ -71,8 +72,7 @@
                 <div class="col-sm-6 row">
                     <div class="col-sm-12">
                         <div class="md-form col-sm-6">
-                            <input placeholder="Nouveau produit..." type="text" id="titre"
-                                class="form-control">
+                            <input placeholder="Nouveau produit..." type="text" id="titre" class="form-control">
                             <label for="inputPlaceholderEx">Titre du mail</label>
                         </div>
                         <div class="md-form col-sm-12">
@@ -111,12 +111,27 @@
                 </div>
             </div>
         </div>
+
         <div class="col-sm-12 emailCreator" style="height: 1000px;">
             <div id="bee-plugin-container"></div>
             <div id="integrator-bottom-bar">
-                <input id="choose-template" type="hidden" style=""/>
+                <input id="choose-template" type="hidden" style="" />
             </div>
-        </div>  
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupFileAddon01">Joindre</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="selectPieceJointe"
+                aria-describedby="inputGroupFileAddon01">
+              <label class="custom-file-label" for="selectPieceJointe">Selectionner pieces jointes</label>
+            </div>
+          </div>
+        <div class="col-sm-9">
+            <div id="allPieceJointe"></div>
+        </div>
+
     </div>
     <footer>
 
@@ -135,10 +150,11 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
 <script src="js/main.js"></script>
-<script type="text/javascript"  src="js/creationMail.js">
+<script type="text/javascript" src="js/creationMail.js">
 </script>
 <script type="text/javascript">
         //var test = localStorage.getItem('ID_Modele_Message');
 
-         </script>
+</script>
+
 </html>

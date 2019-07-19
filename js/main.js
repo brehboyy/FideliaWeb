@@ -1,4 +1,4 @@
-let baseUrl = 'http://localhost/apifidelia/tests/public/';
+let baseUrl = 'http://localhost:8888/apifidelia/tests/public/';
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
