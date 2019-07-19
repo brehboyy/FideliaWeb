@@ -66,9 +66,9 @@
                             compt++;
                         }
                     }
-                    output2 += '<td><span class="table-remove"><button type="button" onclick="editRow(' + val[ID_champs] + ')" class="btn btn-secondary btn-rounded btn-sm my-0">Editer</button></span></td>';
+                    output2 += '<td><span class="table-remove"><button type="button" onclick="editRow('+ val[ID_champs] + ')" class="btn btn-secondary btn-rounded btn-sm my-0">Editer</button></span></td>';
                     output2 += '<td><span class="table-remove"><button type="button" onclick="deleteRow(\'' + ID_champs + '\',' + val[ID_champs] + ')" class="btn btn-danger btn-rounded btn-sm my-0">Supprimer</button></span></td>';
-                    output2 += '<td><span class="table-remove"><button type="button" onclick="saveRow(' + val[ID_champs] + ')" class="btn btn-success btn-rounded btn-sm my-0">Sauvegarder</button></span></td>';
+                    output2 += '<td><span class="table-remove"><button type="button" onclick="saveRow(\'' + ID_champs + '\',' + val[ID_champs] + ')" class="btn btn-success btn-rounded btn-sm my-0">Sauvegarder</button></span></td>';
                     output2 += '</tr>';
                 });
                 $('tbody').html(output2);
@@ -154,31 +154,32 @@ function deleteRow(nom_champs, id_row) {
 }
 
 function editRow(id_row) {
-
-    $('#row'+id_row+'[contenteditable="false"]').attr('contenteditable', true);
+    console.log(id_row);
+    $('[id^="row'+id_row+'"][contenteditable="false"]').attr('contenteditable', true);
 
 }
 
-function saveRow(id_row) {
+function saveRow(nom_champs,id_row) {
 
     let listAttributs = [];
     let listValeurs = [];
-    $('[id^="row'+id_row+'"').each(function() {
+    $('[id^="row'+id_row+'"]').each(function() {
+    console.log($(this));
         var res = ($(this)[0].id).split(id_row);
-        console.log(res[1]);
-        console.log($(this)[0].innerText);
 
             listAttributs.push(res[1]);
             listValeurs.push($(this)[0].innerText);
     });
-        console.log(listAttributs);
-        console.log(listValeurs);
-        console.log($('#selectTable').val());
-
+    console.log(listAttributs);
+    console.log(listValeurs);
+    console.log(nom_champs);
+    console.log(id_row);
         $.ajax({
             url: baseUrl + 'systeme.php/updateTable',
             type: 'POST',
             data: { 
+                'ValIdTable' : JSON.stringify(id_row),
+                'IdTable' : JSON.stringify(nom_champs),
                 'table': JSON.stringify($('#selectTable').val()),
                 'listAttributs': JSON.stringify(listAttributs),
                 'listValeurs': JSON.stringify(listValeurs)},
