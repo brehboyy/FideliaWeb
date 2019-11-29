@@ -155,6 +155,8 @@
             console.log('response', response);
         },
         onSave: function (jsonFile, htmlFile) {
+            console.log(jsonFile);
+            return;
             var getUrlParameter = function getUrlParameter(sParam) {
                 var sPageURL = window.location.search.substring(1),
                     sURLVariables = sPageURL.split('&'),
@@ -186,7 +188,6 @@
             };
 
             var result;
-            var exist = false;
             $.ajax({
                 url: baseUrl + 'message.php/existById/' + ID_Modele_Message,
                 type: 'GET'
